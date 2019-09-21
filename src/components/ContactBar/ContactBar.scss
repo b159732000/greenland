@@ -1,0 +1,78 @@
+@import "../../SCSSVariables.scss";
+
+.ContactBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $ContactBarHeight;
+  z-index: 99999;
+  background-color: #fff;
+  .leftContainer {
+    position: absolute;
+    left: 2%;
+    top: 50%;
+    height: 100%;
+    transform: translate(0, -50%);
+    display: flex;
+    align-items: center;
+    .portraitContainer {
+      height: 100%;
+      padding: 7px;
+      img {
+        height: 100%;
+        border-radius: 50%;
+      }
+    }
+    .infoContainer {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      .central {
+        & > div {
+          font-size: 0.8rem;
+        }
+        .name {
+          height: 50%;
+        }
+        .phone {
+          height: 50%;
+        }
+      }
+    }
+  }
+  .rightContainer {
+    position: absolute;
+    right: 3%;
+    top: 50%;
+    height: 60%;
+    transform: translate(0, -50%);
+    .iconContainer {
+        height: 100%;
+        &>div {
+            height: 100%;
+            display: inline-block;
+            margin-left: 1.5rem;
+            position: relative;
+            &::after {
+                content: '';
+                position: absolute;
+                height: 100%;
+                width: 1px;
+                background-color: gray;
+                left: -0.75rem;
+                top: 50%;
+                transform: translate(0, -50%);
+            }
+            img {
+                height: 100%;
+            }
+        }
+      .phone {
+      }
+      .messanger {
+      }
+    }
+  }
+}

@@ -1,43 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<head>
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="logo192.png" />
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      list-style-type: none;
+      text-decoration: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      /* scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch; */
+      /* 禁止選取 */
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    /* 隱藏捲動軸 */
+    *::-webkit-scrollbar {
+      display: none;
+    }
+
+    body {
+      /* 自己加的CSS初始化 */
+      /* border: 1px solid red; */
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      top: 0;
+      left: 0;
+      font-family: "Microsoft Yahei", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif !important;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    #root {
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      overflow: hidden;
+    }
+  </style>
+
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="stylesheet" href="%PUBLIC_URL%/swiper.min.css">
+
+  <title>绿地</title>
+
+  <!-- <link rel="stylesheet" href="https://cdn.pannellum.org/2.4/pannellum.css" />
+  <script type="text/javascript" src="https://cdn.pannellum.org/2.4/pannellum.js"></script> -->
+  <link rel="stylesheet" href="%PUBLIC_URL%/lib/pannellum.css" />
+  <script type="text/javascript" src="%PUBLIC_URL%/lib/pannellum.js"></script>
+</head>
+
+<body>
+
+  <!-- 判斷當前瀏覽器是否是微信瀏覽器、微信登入是否啟用 -->
+  <script>
+    // 無論如何，強制啟用或關閉微信登入
+    let forceEnableWeiXinLogIn = true;
+    // 是否启用载入画面
+    window.loadingPageIsOn = false;
+
+    // 透过判断，决定window.enableWeiXinLogIn的值
+    if (forceEnableWeiXinLogIn) {
+      // 判斷是否是微信瀏覽器
+      function isWeiXinBrowser() {
+        let ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+          console.log('是微信瀏覽器');
+          return true;
+        } else {
+          console.log('不是微信瀏覽器');
+          return false;
+        }
+      }
+
+      // 是微信瀏覽器就起用微信登入，否則不啟用
+      if (isWeiXinBrowser()) {
+        console.log('啟用微信登入');
+        window.enableWeiXinLogIn = true;
+      } else {
+        console.log('禁用微信登入');
+        window.enableWeiXinLogIn = false;
+      }
+    } else {
+      console.log('不驗證瀏覽器種類，強制跳過微信驗證(通常是因為正在debug才做此設定)');
+      window.enableWeiXinLogIn = false;
+    }
+  </script>
+
+  <div id="root"></div>
+</body>
+
 </html>

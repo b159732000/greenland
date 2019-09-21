@@ -1,0 +1,18 @@
+@import '../../SCSSVariables.scss';
+
+.BusinessIntroduction {
+    position: fixed;
+    top: $ContactBarHeight;
+    left: 0;
+    height: 100 - $ContactBarHeight - $NavigationBarHeight;
+    width: 100%;
+    .text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+        color: white;
+        font-weight: 600;
+    }
+}

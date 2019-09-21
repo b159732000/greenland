@@ -1,0 +1,33 @@
+@import "../../SCSSVariables.scss";
+
+.BrandIntroduction {
+  position: fixed;
+  top: $ContactBarHeight;
+  left: 0;
+  height: 100 - $ContactBarHeight - $NavigationBarHeight;
+  width: 100%;
+  // 樓書swiper
+  .BuildingBook {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    .swiper-container {
+      height: 100%;
+      .swiperWrapper {
+        height: 100%;
+        white-space: nowrap;
+        .swiper-slide {
+          height: 100%;
+        //   display: inline-block;
+          display: block;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}

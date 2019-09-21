@@ -1,0 +1,84 @@
+@import "../../SCSSVariables.scss";
+
+.Traffic {
+  position: fixed;
+  top: $ContactBarHeight;
+  // top: 0;
+  left: 0;
+  // height: 100 - $ContactBarHeight - $NavigationBarHeight;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  .logo {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    height: 4%;
+    z-index: 1010;
+    img {
+      height: 100%;
+    }
+  }
+  // swiper
+  .BuildingBook {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    .swiper-container {
+      height: 100%;
+      .swiperWrapper {
+        height: 100%;
+        white-space: nowrap;
+        .swiper-slide {
+          height: 100%;
+          //   display: inline-block;
+          display: block;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+  // 按鈕外框
+  .menuContainer {
+    position: absolute;
+    top: 7%;
+    right: 0;
+    width: 15%;
+    .item {
+      margin-bottom: 25%;
+      width: 100%;
+      position: relative;
+      img {
+        width: 100%;
+      }
+      // 未啟用時
+      &.notActive {
+        .activeButton {
+          opacity: 0;
+        }
+        .notActiveButton {
+          opacity: 1;
+        }
+      }
+      .activeButton {
+        position: relative;
+        opacity: 1;
+      }
+      .notActiveButton {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+      &.city {
+      }
+      &.project {
+      }
+    }
+  }
+}

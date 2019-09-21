@@ -1,0 +1,171 @@
+@import "../../SCSSVariables.scss";
+
+.ThreeDimention {
+  position: fixed;
+  top: $ContactBarHeight;
+  left: 0;
+  height: 100 - $ContactBarHeight - $NavigationBarHeight;
+  width: 100%;
+  background-color: black;
+  .logo {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    height: 4%;
+    z-index: 1010;
+    img {
+      height: 100%;
+    }
+  }
+  // swiper
+  .BuildingBook {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    .swiper-container {
+      height: 100%;
+      .swiperWrapper {
+        height: 100%;
+        white-space: nowrap;
+        .swiper-slide {
+          height: 100%;
+          //   display: inline-block;
+          display: block;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+  // 全景圖
+  .panorama {
+    opacity: 1;
+    &.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .pnlm-render-container {
+      // 圖中按鈕hotspot
+      .gardenPanoHotspot {
+        width: 70px;
+        height: 50px;
+        // background-color: red;
+        // background-image: url("../../images/Jghx/Pannellum/DoubleFrontArrow.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        // hotspot上的文字方塊
+        span {
+          font-size: 0.7rem;
+          visibility: visible;
+          position: absolute;
+          border-radius: 3px;
+          background-color: rgba(0, 0, 0, 0.5);
+          color: #fff;
+          text-align: center;
+          max-height: 3rem;
+          max-width: 200px;
+          padding: 5px 10px;
+          margin-left: -220px;
+          white-space: nowrap;
+          cursor: default;
+          // 文字方塊下的小箭頭
+          // &:after {
+          //   content: '';
+          //   position: absolute;
+          //   width: 0;
+          //   height: 0;
+          //   border-width: 10px;
+          //   border-style: solid;
+          //   border-color: #fff transparent transparent transparent;
+          //   bottom: -20px;
+          //   left: -10px;
+          //   margin: 0 50%;
+          // }
+        }
+      }
+    }
+  }
+  // 按鈕外框
+  .menuContainer {
+    position: absolute;
+    top: 7%;
+    right: 0;
+    // width: 15%;
+    height: 3.5%;
+    z-index: 1000;
+    .item {
+      margin-bottom: 25%;
+      height: 100%;
+      position: relative;
+      text-align: end;
+      img {
+        height: 100%;
+      }
+      // 未啟用時
+      &.notActive {
+        .activeButton {
+          opacity: 0;
+        }
+        .notActiveButton {
+          opacity: 1;
+        }
+      }
+      .activeButton {
+        position: relative;
+        opacity: 1;
+      }
+      .notActiveButton {
+        position: absolute;
+        top: 0;
+        right: 0;
+        opacity: 0;
+      }
+      // 區域全景次選單、項目全景次選單
+      .secondMenu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 90%;
+        transform: translate(-130%, 0);
+        & > div {
+          position: relative;
+          height: 100%;
+          margin-bottom: 1rem;
+          img {
+            height: 100%;
+          }
+          // 白天/黑夜啟用
+          &.active {
+            .activeButton {
+              opacity: 1;
+              pointer-events: auto;
+            }
+            .notActiveButton {
+              opacity: 0;
+              pointer-events: none;
+            }
+          }
+          // 白天/黑夜非啟用
+          &.notActive {
+            .activeButton {
+              opacity: 0;
+              pointer-events: none;
+            }
+            .notActiveButton {
+              opacity: 1;
+              pointer-events: auto;
+            }
+          }
+        }
+        .day {
+        }
+        .night {
+        }
+      }
+    }
+  }
+}
