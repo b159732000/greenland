@@ -9,6 +9,16 @@ const Traffic = () => {
 
     const TrafficDOM = useRef(null);
 
+    useEffect(()=>{
+        var handler = function(e){
+            e.preventDefault();
+            }
+            document.addEventListener('touchmove', handler, false);//阻止默认事件
+            return()=>{
+                document.removeEventListener('touchmove', handler, false);//打开默认事件
+            }
+    }, [])
+
     // 右上角Menu按鈕按下時觸發
     const handleTopMenuClick = (selectedItem) => {
         switch (selectedItem) {
@@ -80,7 +90,7 @@ const Traffic = () => {
         for (let i = 1; i <= 7; i++) {
             items.push(
                 <div key={i}>
-                    <img src={require('../../images/Traffic/Book/P3-' + i + '.png')} alt="" />
+                    <img src={require('../../images/Traffic/Book/P3-' + i + '.jpg')} alt="" />
                 </div>
             )
         }

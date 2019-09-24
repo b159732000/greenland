@@ -92,7 +92,7 @@ const ThreeDimention = () => {
         for (let i = 1; i <= 3; i++) {
             items.push(
                 <div key={i}>
-                    <img src={require('../../images/ThreeDimention/Book/' + i + '.png')} alt="" />
+                    <img src={require('../../images/ThreeDimention/Book/' + i + '.jpg')} alt="" />
                 </div>
             )
         }
@@ -110,6 +110,8 @@ const ThreeDimention = () => {
             "autoLoad": true,
             "showControls": false,
             "hotSpotDebug": false,
+            "maxHfov": 80,
+            "minHfov": 50,
             // 預設載入的scene
             "default": {
                 "firstScene": "FullLocationDay",
@@ -120,9 +122,9 @@ const ThreeDimention = () => {
                 // 區域全景白天
                 "FullLocationDay": {
                     "type": "multires",
-                    "pitch": -4.5,
-                    "yaw": -58.4,
-                    "hfov": 80,
+                    "pitch": -15,
+                    "yaw": -4,
+                    "hfov": 55,
                     // 全景圖來源路徑
                     "multiRes": {
                         "basePath": process.env.PUBLIC_URL + "/pannellum/FullLocationDay",
@@ -162,9 +164,9 @@ const ThreeDimention = () => {
                 // 區域全景黑夜
                 "FullLocationNight": {
                     "type": "multires",
-                    "pitch": -4.5,
-                    "yaw": -58.4,
-                    "hfov": 80,
+                    "pitch": -15,
+                    "yaw": -4,
+                    "hfov": 55,
                     // 全景圖來源路徑
                     "multiRes": {
                         "basePath": process.env.PUBLIC_URL + "/pannellum/FullLocationNight",
@@ -181,7 +183,7 @@ const ThreeDimention = () => {
                     "type": "multires",
                     "pitch": -4.5,
                     "yaw": -58.4,
-                    "hfov": 80,
+                    "hfov": 60,
                     // 全景圖來源路徑
                     "multiRes": {
                         "basePath": process.env.PUBLIC_URL + "/pannellum/Science",
@@ -198,7 +200,7 @@ const ThreeDimention = () => {
                     "type": "multires",
                     "pitch": -4.5,
                     "yaw": -58.4,
-                    "hfov": 80,
+                    "hfov": 60,
                     // 全景圖來源路徑
                     "multiRes": {
                         "basePath": process.env.PUBLIC_URL + "/pannellum/ResidentialArea",
@@ -215,7 +217,7 @@ const ThreeDimention = () => {
                     "type": "multires",
                     "pitch": -4.5,
                     "yaw": -58.4,
-                    "hfov": 80,
+                    "hfov": 60,
                     // 全景圖來源路徑
                     "multiRes": {
                         "basePath": process.env.PUBLIC_URL + "/pannellum/Resort",
@@ -232,7 +234,7 @@ const ThreeDimention = () => {
                     "type": "multires",
                     "pitch": -4.5,
                     "yaw": -58.4,
-                    "hfov": 80,
+                    "hfov": 60,
                     // 全景圖來源路徑
                     "multiRes": {
                         "basePath": process.env.PUBLIC_URL + "/pannellum/Finance",
@@ -249,7 +251,7 @@ const ThreeDimention = () => {
                     "type": "multires",
                     "pitch": -4.5,
                     "yaw": -58.4,
-                    "hfov": 80,
+                    "hfov": 60,
                     // 全景圖來源路徑
                     "multiRes": {
                         "basePath": process.env.PUBLIC_URL + "/pannellum/FirstOpen",
@@ -297,7 +299,7 @@ const ThreeDimention = () => {
             </div>
 
             {/* swiper */}
-            <div className="BuildingBook">
+            <div className={(currentActivatingMenu==="Location")?("BuildingBook"):("BuildingBook hide")}>
                 {/* 在css中叫做swiper-container */}
                 <Swiper {...swiperParams} getSwiper={updateSwiper}>
                     {renderImages()}

@@ -1,0 +1,295 @@
+var emoij = [{
+  str: '/::)',
+  reg: '/::\\)',
+  img: '/static/wx_emoij/0.png'
+}, {
+  str: '/::~',
+  reg: '/::~',
+  img: '/static/wx_emoij/1.png'
+}, {
+  str: '/::B',
+  reg: '/::B',
+  img: '/static/wx_emoij/2.png'
+}, {
+  str: '/::|',
+  reg: '/::\\|',
+  img: '/static/wx_emoij/3.png'
+}, {
+  str: '/:8-)',
+  reg: '/:8-\\)',
+  img: '/static/wx_emoij/4.png'
+}, {
+  str: '/::<',
+  reg: '/::<',
+  img: '/static/wx_emoij/5.png'
+}, {
+  str: '/::$',
+  reg: '/::\\$',
+  img: '/static/wx_emoij/6.png'
+}, {
+  str: '/::X',
+  reg: '/::X',
+  img: '/static/wx_emoij/7.png'
+}, {
+  str: '/::Z',
+  reg: '/::Z',
+  img: '/static/wx_emoij/8.png'
+}, {
+  str: "/::'(",
+  reg: "/::\\'\\(",
+  img: '/static/wx_emoij/9.png'
+}, {
+  str: '/::-|',
+  reg: '/::-\\|',
+  img: '/static/wx_emoij/10.png'
+}, {
+  str: '/::@',
+  reg: '/::\\@',
+  img: '/static/wx_emoij/11.png'
+}, {
+  str: '/::P',
+  reg: '/::P',
+  img: '/static/wx_emoij/12.png'
+}, {
+  str: '/::D',
+  reg: '/::D',
+  img: '/static/wx_emoij/13.png'
+}, {
+  str: '/::O',
+  reg: '/::O',
+  img: '/static/wx_emoij/14.png'
+}, {
+  str: '/::(',
+  reg: '/::\\(',
+  img: '/static/wx_emoij/15.png'
+}, {
+  str: '/::+',
+  reg: '/::\\+',
+  img: '/static/wx_emoij/16.png'
+}, {
+  str: '[囧]',
+  reg: '\\[囧\\]',
+  img: '/static/wx_emoij/17.png'
+}, {
+  str: '/::Q',
+  reg: '/::Q',
+  img: '/static/wx_emoij/18.png'
+}, {
+  str: '/::T',
+  reg: '/::T',
+  img: '/static/wx_emoij/19.png'
+}, {
+  str: '/:,@P',
+  reg: '/:,\\@P',
+  img: '/static/wx_emoij/20.png'
+}, {
+  str: '/:,@-D',
+  reg: '/:,\\@\\-D',
+  img: '/static/wx_emoij/21.png'
+}, {
+  str: '/::d',
+  reg: '/::d',
+  img: '/static/wx_emoij/22.png'
+}, {
+  str: '/:,@o',
+  reg: '/:,\\@o',
+  img: '/static/wx_emoij/23.png'
+}, {
+  str: '/::g',
+  reg: '/::g',
+  img: '/static/wx_emoij/24.png'
+}, {
+  str: '/:|-)',
+  reg: '/:\\|\\-\\)',
+  img: '/static/wx_emoij/25.png'
+}, {
+  str: '/::!',
+  reg: '/::!',
+  img: '/static/wx_emoij/26.png'
+}, {
+  str: '/::L',
+  reg: '/::L',
+  img: '/static/wx_emoij/27.png'
+}, {
+  str: '/::>',
+  reg: '/::>',
+  img: '/static/wx_emoij/28.png'
+}, {
+  str: '/::,@',
+  reg: '/::,\\@',
+  img: '/static/wx_emoij/29.png'
+}, {
+  str: '/:,@f',
+  reg: '/:,\\@f',
+  img: '/static/wx_emoij/30.png'
+}, {
+  str: '/::-S',
+  reg: '/::\\-S',
+  img: '/static/wx_emoij/31.png'
+}, {
+  str: '/:?',
+  reg: '/:\\?',
+  img: '/static/wx_emoij/32.png'
+}, {
+  str: '/:,@x',
+  reg: '/:,\\@x',
+  img: '/static/wx_emoij/33.png'
+}, {
+  str: '/:,@@',
+  reg: '/:,\\@\\@',
+  img: '/static/wx_emoij/34.png'
+}, {
+  str: '/::8',
+  reg: '/::8',
+  img: '/static/wx_emoij/35.png'
+}, {
+  str: '/:,@!',
+  reg: '/:,\\@!',
+  img: '/static/wx_emoij/36.png'
+}, {
+  str: '/:!!!',
+  reg: '/:!!!',
+  img: '/static/wx_emoij/37.png'
+}, {
+  str: '/:xx',
+  reg: '/:xx',
+  img: '/static/wx_emoij/38.png'
+}, {
+  str: '/:bye',
+  reg: '/:bye',
+  img: '/static/wx_emoij/39.png'
+}, {
+  str: '/:wipe',
+  reg: '/:wipe',
+  img: '/static/wx_emoij/40.png'
+}, {
+  str: '/:dig',
+  reg: '/:dig',
+  img: '/static/wx_emoij/41.png'
+}, {
+  str: '/:handclap',
+  reg: '/:handclap',
+  img: '/static/wx_emoij/42.png'
+}, {
+  str: '/:&-(',
+  reg: '/:&-\\(',
+  img: '/static/wx_emoij/43.png'
+}, {
+  str: '/:B-)',
+  reg: '/:B\\-\\)',
+  img: '/static/wx_emoij/44.png'
+}, {
+  str: '/:<@',
+  reg: '/:<\\@',
+  img: '/static/wx_emoij/45.png'
+}, {
+  str: '/:@>',
+  reg: '/:\\@>',
+  img: '/static/wx_emoij/46.png'
+}, {
+  str: '/::-O',
+  reg: '/::\\-O',
+  img: '/static/wx_emoij/47.png'
+}, {
+  str: '/:>-|',
+  reg: '/:>\\-\\|',
+  img: '/static/wx_emoij/48.png'
+}, {
+  str: '/:P-(',
+  reg: '/:P\\-\\(',
+  img: '/static/wx_emoij/49.png'
+}, {
+  str: '/::\'|',
+  reg: '/::\'\\|',
+  img: '/static/wx_emoij/50.png'
+}, {
+  str: '/:X-)',
+  reg: '/:X\\-\\)',
+  img: '/static/wx_emoij/51.png'
+}, {
+  str: '/::*',
+  reg: '/::\\*',
+  img: '/static/wx_emoij/52.png'
+}, {
+  str: '/:@x',
+  reg: '/:\\@x',
+  img: '/static/wx_emoij/53.png'
+}, {
+  str: '/:8*',
+  reg: '/:8\\*',
+  img: '/static/wx_emoij/54.png'
+}, {
+  str: '/:pd',
+  reg: '/:pd',
+  img: '/static/wx_emoij/55.png'
+}, {
+  str: '/:<W>',
+  reg: '/:<W>',
+  img: '/static/wx_emoij/56.png'
+}, {
+  str: '/:beer',
+  reg: '/:beer',
+  img: '/static/wx_emoij/57.png'
+}, {
+  str: '/:basketb',
+  reg: '/:basketb',
+  img: '/static/wx_emoij/58.png'
+}, {
+  str: '/:oo',
+  reg: '/:oo',
+  img: '/static/wx_emoij/59.png'
+}, {
+  str: '/:coffee',
+  reg: '/:coffee',
+  img: '/static/wx_emoij/60.png'
+}, {
+  str: '/:eat',
+  reg: '/:eat',
+  img: '/static/wx_emoij/61.png'
+}, {
+  str: '/:pig',
+  reg: '/:pig',
+  img: '/static/wx_emoij/62.png'
+}, {
+  str: '/:rose',
+  reg: '/:rose',
+  img: '/static/wx_emoij/63.png'
+}, {
+  str: '/:fade',
+  reg: '/:fade',
+  img: '/static/wx_emoij/64.png'
+}, {
+  str: '/:showlove',
+  reg: '/:showlove',
+  img: '/static/wx_emoij/65.png'
+}, {
+  str: '/:heart',
+  reg: '/:heart',
+  img: '/static/wx_emoij/66.png'
+}, {
+  str: '/:break',
+  reg: '/:break',
+  img: '/static/wx_emoij/67.png'
+}, {
+  str: '/:cake',
+  reg: '/:cake',
+  img: '/static/wx_emoij/68.png'
+}, {
+  str: '/:li',
+  reg: '/:li',
+  img: '/static/wx_emoij/69.png'
+}]
+
+export function TextWxEmoij (text) {
+  var re2 = new RegExp('\n', 'g')
+  text = text.replace(re2, '<br/>')
+  for (var i = 0; i < emoij.length; i++) {
+    var re = new RegExp(emoij[i].reg, 'g')
+    text = text.replace(re, '<img style="vertical-align: middle" class="emoij" src="' + emoij[i].img + '" />')
+  }
+  return text
+}
+
+export function getEmoij () {
+  return emoij
+};

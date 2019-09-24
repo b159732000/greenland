@@ -1,0 +1,19 @@
+// $PrimaryRed: #3A506B;    //綠
+$PrimaryRed: #F99D33;     //黃
+// $PrimaryRed: #D92040;    //紅
+$PrimaryWhite: #FBF7F3;
+$PrimaryGray: #E1E1E1;
+$PrimaryBlack: #404749;
+// $PrimaryBlack: #404749;
+$NavigationBarTransition: all 0.6s cubic-bezier(0.125, 0.595, 0.315, 0.970);
+$PrimaryTimeFunction: cubic-bezier(0.125, 0.595, 0.315, 0.970);
+
+// 換頁頁面刷過時間
+// $CSSTransitionTransition: all 0.4s ease-in-out 0s;
+$CSSTransitionTransition: all 0.4s cubic-bezier(.55,.28,.64,.93) 0s;
+
+// 置頂列高度
+$TopBarHeight: 3.5rem;
+
+// 導行列高度
+$NavigationBarHeight: 8%;

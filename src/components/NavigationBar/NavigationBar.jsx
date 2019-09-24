@@ -13,7 +13,7 @@ const NavigationBar = () => {
             {/* 第一個menu */}
             <div className={(currentActiveMenuNumber === 1) ? ("menuContainer first") : ("menuContainer first hide")}>
                 {/* 一般頁面按鈕 */}
-                <NavLink to='/GreenLand/HomePage' activeClassName="active" className="item page">
+                <NavLink to='/GreenLand' exact activeClassName="active" className="item page">
                     <div className="bg"></div>
                     <div className="upper">
                         <img src={require('../../images/NavigationBar/HomePage.png')} alt="" />

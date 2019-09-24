@@ -7,6 +7,7 @@
   height: 100 - $ContactBarHeight - $NavigationBarHeight;
   width: 100%;
   background-color: black;
+  overflow: hidden;
   .logo {
     position: absolute;
     top: 2%;
@@ -24,6 +25,11 @@
     left: 0;
     height: 100%;
     width: 100%;
+    &.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    // opacity: 0;
     .swiper-container {
       height: 100%;
       .swiperWrapper {
@@ -95,7 +101,7 @@
     top: 7%;
     right: 0;
     // width: 15%;
-    height: 3.5%;
+    height: 3%;
     z-index: 1000;
     .item {
       margin-bottom: 25%;

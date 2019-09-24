@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Web site created using create-react-app" />
   <link rel="apple-touch-icon" href="logo192.png" />
@@ -59,9 +59,9 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <link rel="stylesheet" href="%PUBLIC_URL%/swiper.min.css">
+  <link rel="stylesheet" href="%PUBLIC_URL%/lib/Swiper.min.css">
 
-  <title>绿地</title>
+  <title>绿地 - 城际空间站楼盘鉴赏</title>
 
   <!-- <link rel="stylesheet" href="https://cdn.pannellum.org/2.4/pannellum.css" />
   <script type="text/javascript" src="https://cdn.pannellum.org/2.4/pannellum.js"></script> -->
@@ -71,12 +71,20 @@
 
 <body>
 
-  <!-- 判斷當前瀏覽器是否是微信瀏覽器、微信登入是否啟用 -->
+  <!-- 專案其他設定 -->
   <script>
-    // 無論如何，強制啟用或關閉微信登入
-    let forceEnableWeiXinLogIn = true;
     // 是否启用载入画面
     window.loadingPageIsOn = false;
+    // 是否啟用後台連結、聊天功能
+    window.enableBackEndFunction = true;
+    // 本專案pid
+    window.pid = 2;
+  </script>
+
+  <!-- 判斷當前瀏覽器是否是微信瀏覽器、微信登入是否啟用 -->
+  <script>
+    // 啟用或關閉微信登入 (以下程式碼會判斷是否真的啟用)
+    let forceEnableWeiXinLogIn = true;
 
     // 透过判断，决定window.enableWeiXinLogIn的值
     if (forceEnableWeiXinLogIn) {

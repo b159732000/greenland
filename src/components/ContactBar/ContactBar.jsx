@@ -1,21 +1,87 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './ContactBar.scss'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 
 const ContactBar = () => {
+    // 從Store取出銷售資訊 (chat Reducer中)
+    const storeClientInfo = useSelector(state => state.chat.clientInfo);
+    // 本页State(銷售名、電話、大頭貼)
+    const [salerInfo, setSalerInfo] = useState({
+        name: '',
+        phone: '',
+        portraitUrl: ''
+    })
+    useEffect(() => {
+        console.log('ContactBar.state.salerInfo如下');
+        console.log(salerInfo);
+        console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑');
+    }, [salerInfo])
+
+    const [musicIsOpen, setMusicIsOpen] = useState(true);
+    const audioDOM = useRef();
+
+    // 为了自动播放音乐
+    useEffect(() => {
+        window.addEventListener('touchstart', forceSafariPlayAudio, false);
+    }, [])
+    const forceSafariPlayAudio = () => {
+        if (musicIsOpen) {
+            // setMusicIsOpen(true);
+            if (audioDOM.current) {
+                audioDOM.current.play();
+            }
+            document.removeEventListener('touchstart', forceSafariPlayAudio, false);//打开默认事件
+        }
+    }
+
+    useEffect(() => {
+        console.log('ContactBar中讀到的store中的ClientInfo↓↓↓');
+        console.log(storeClientInfo);
+        console.log('ContactBar中讀到的store中的ClientInfo↑↑↑');
+
+        // 将store的client资讯放到本页state salerInfo中
+        if (storeClientInfo) {
+            // if (storeClientInfo.nickname && storeClientInfo.phone && storeClientInfo.logo) {
+            console.log('將sotre中讀到的clientInfo放到contactBar中的state的salerInfo中');
+            setSalerInfo({
+                ...salerInfo,
+                // name: storeClientInfo.nickname,
+                // phone: storeClientInfo.phone,
+                // portraitUrl: storeClientInfo.logo,
+                ...storeClientInfo
+            })
+        }
+    }, [storeClientInfo])
+
+    // 音樂按鈕點擊時觸發
+    const handleMusicIconClick = () => {
+        if (musicIsOpen) {
+            audioDOM.current.pause();
+        } else if (!musicIsOpen) {
+            audioDOM.current.play();
+        }
+        setMusicIsOpen(!musicIsOpen);
+    }
+
     return (
         <div className="ContactBar">
+
+            <audio src={require('../../images/BgMusic.mp3')} ref={audioDOM} autoPlay loop></audio>
 
             {/* 左側 */}
             <div className="leftContainer">
                 {/* 大頭貼容器 */}
                 <div className="portraitContainer">
-                    <img src={require('../../images/Portrait.png')} alt="" />
+                    <img src={(salerInfo.portraitUrl) ? (salerInfo.portraitUrl) : (require('../../images/Portrait.png'))} alt="" />
                 </div>
                 {/* 資訊容器 */}
                 <div className="infoContainer">
                     <div className="central">
-                        <div className="name">小王</div>
-                        <div className="phone">123xxxxxxxx</div>
+
+                        {/* 有銷售: 後台定義的暱稱(若無暱稱則用真名) / 無銷售: 顯示無銷售 */}
+                        <div className="name">{(salerInfo.nickname) ? ((salerInfo.real_name) ? (salerInfo.real_name) : (salerInfo.nickname)) : ('无法取得销售人员姓名')}</div>
+                        <div className="phone">{(salerInfo.phone) ? (salerInfo.phone) : ('无法取得销售人员手机号')}</div>
                     </div>
                 </div>
             </div>
@@ -26,10 +92,19 @@ const ContactBar = () => {
                 <div className="iconContainer">
                     {/* 圖示本身 */}
                     <div className="phone">
-                        <img src={require('../../images/ContactBar/PhoneIcon.png')} alt=""/>
+                        <img src={require('../../images/ContactBar/PhoneIcon.png')} alt="" />
                     </div>
                     <div className="messanger">
-                        <img src={require('../../images/ContactBar/MessageIcon.png')} alt=""/>
+                        {(window.enableBackEndFunction) ? (<Link to='/GreenLand/CustomerChatPage'></Link>) : (null)}
+                        <img src={require('../../images/ContactBar/MessageIcon.png')} alt="" />
+                    </div>
+                    <div className={"music" + ((musicIsOpen) ? "" : " musicIsNotActive")} onClick={() => handleMusicIconClick()}>
+                        <img className='icon notMute' src={require('../../images/ContactBar/MusicIsOpen.png')} alt="" />
+                        <img className='icon mute' src={require('../../images/ContactBar/MusicIsNotOpen.png')} alt="" />
+                    </div>
+                    <div className="backEnd">
+                        {(window.enableBackEndFunction) ? (<Link to='/GreenLand/Backend/HomePage'></Link>) : (null)}
+                        <img src={require('../../images/ContactBar/BackEndIcon.png')} alt="" />
                     </div>
                 </div>
             </div>

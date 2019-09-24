@@ -1,2 +1,6 @@
 $ContactBarHeight: 7%;
 $NavigationBarHeight: 7%;
+
+$BackendNavigationBarHeight: 10%;
+$BackendPageInnerHeight: 100%-$BackendNavigationBarHeight;
+$BackendHeaderHeight: 10%;

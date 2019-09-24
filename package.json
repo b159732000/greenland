@@ -2,7 +2,7 @@
   "name": "greenland",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/GreenLand/HomePage/",
+  "homepage": "/GreenLand/",
   "dependencies": {
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

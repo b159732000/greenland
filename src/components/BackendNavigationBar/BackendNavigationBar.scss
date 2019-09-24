@@ -1,0 +1,626 @@
+@import '../../SCSSVariables.scss';
+
+// menu啟用/關閉時的寬度
+$MenuActiveWidth: 30%;
+$MenuNotActiveWidth: (100-$MenuActiveWidth)/3;
+// $MenuTimeFunction: all 0.6s cubic-bezier(0.125, 0.595, 0.315, 0.97) 0s;
+$MenuTimeFunction: all 0.7s cubic-bezier(0.49, 0.08, 0.32, 0.97) 0s;
+
+// -----------------------動畫開啟關閉----------------------
+// ---禁用動畫的話，把以下三個取消就好，並取消本頁最下方(描繪路徑動畫)---
+
+// 啟用動畫
+// 清單上方滑動塊(凸起部分)
+$ListUpperTransition: all 0.4s cubic-bezier(0.49, 0.08, 0.32, 0.97) 0.2s;
+// 變小跟變無色的動畫
+$SmallAndOpacityZeroTransition: all 0.5s cubic-bezier(0.49, 0.08, 0.32, 0.97) 0s, background-color 0.4s cubic-bezier(0.49, 0.08, 0.32, 0.97) 0s;
+// 變大跟變橘色的動畫
+$BigAndToOrangeTransition: all 0.7s cubic-bezier(0.49, 0.08, 0.32, 0.97) 0.3s;
+
+// 禁用動畫
+// // 清單上方滑動塊(凸起部分)
+// $ListUpperTransition:none;
+// // 變小跟變無色的動畫
+// $SmallAndOpacityZeroTransition:none;
+// // 變大跟變橘色的動畫
+// $BigAndToOrangeTransition:none;
+// -----------------------動畫開啟關閉----------------------
+
+.NavigationBarContainer {
+  background-color: rgba(255, 255, 255, 0);
+  position: fixed;
+  // z-index: 1000;
+  bottom: 0;
+  height: $BackendNavigationBarHeight;
+  width: 100vw;
+  pointer-events: none;
+
+  .debug {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+  }
+
+  // 清單上方滑動塊(凸起部分)
+  .upperBoxPosition {
+    height: 30%;
+    position: absolute;
+    top: 2%;
+    width: 30%;
+    transform: translate(-50%, 0);
+    transition: $ListUpperTransition;
+    fill: #1e1e28;
+    left: 12.5%;
+    pointer-events: all;
+    // 當在首頁
+    &.HomePage {
+      left: 12.5%;
+    }
+    // 當在資料頁
+    &.DataPage {
+      left: 37.5%;
+    }
+    // 當在聊天頁
+    &.ChatPage {
+      left: 62.5%;
+    }
+    // 當在訪客頁
+    &.VisitorPage {
+      left: 87.5%;
+    }
+  }
+
+  // 新建客戶按鈕
+  .createCustomer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background-color: #fff;
+    height: 7.5vh;
+    width: 7.5vh;
+    z-index: 10000;
+    border-radius: 50%;
+    transform: translate(-50%, -12%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5%;
+    .button {
+      border-radius: 50%;
+      height: 100%;
+      width: 100%;
+      background-color: #FAAB1A;
+    }
+  }
+
+  // 四個清單選項
+  ul {
+    background-color: #1e1e28;
+    height: 70%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    pointer-events: all;
+    li {
+      &>a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+      }
+      display: inline-block;
+      height: 100%;
+      width: 25%;
+      position: relative;
+      .iconPositioner {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        .circleContainer {
+          width: 4.5vh;
+          height: 4.5vh;
+          border-radius: 50%;
+          position: absolute;
+          bottom: 0%;
+          left: 50%;
+          transform: translate(-50%, 0);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          // transition: $MenuTimeFunction;
+          // 變小跟變無色的動畫
+          transition: $SmallAndOpacityZeroTransition;
+          svg {
+            // width: 28px;
+            height: 60%;
+            path {
+              fill: none;
+              // fill-opacity: 1;
+              // transition: all 2s ease-out 0s;
+              stroke: white;
+              stroke-width: 3;
+              stroke-opacity: 1;
+              stroke-dasharray: 180;
+              stroke-dashoffset: 0;
+              &.homePagePath {
+                stroke-dasharray: 178;
+              }
+              &.dataPageBigBox {
+                stroke-dasharray: 97;
+              }
+              &.dataPageMiddleBox {
+                stroke-dasharray: 81;
+              }
+              &.dataPageSmallBox {
+                stroke-dasharray: 61;
+              }
+              &.dataPageLine {
+                stroke-dasharray: 50;
+              }
+              &.chatPageBigChat {
+                stroke-dasharray: 144;
+              }
+              &.chatPageSmallChat {
+                stroke-dasharray: 54;
+              }
+              &.chatPageMouth {
+                stroke-dasharray: 30;
+              }
+              &.visitorPageOuter {
+                stroke-dasharray: 129;
+              }
+              &.visitorPageHead {
+                stroke-dasharray: 48;
+              }
+              &.visitorPageRightArm {
+                stroke-dasharray: 21;
+              }
+              &.visitorPageLeftArm {
+                stroke-dasharray: 21;
+              }
+              &.visitorPageLeftTopLine {
+                stroke-dasharray: 18;
+              }
+              &.visitorPageLeftMiddleLine {
+                stroke-dasharray: 18;
+              }
+              &.visitorPageLeftBottomLine {
+                stroke-dasharray: 18;
+              }
+            }
+          }
+        }
+      }
+
+      // 當前的頁面(啟用的按鈕)
+      &.active {
+        .circleContainer {
+          background-color: #f4a926;
+          height: 7vh;
+          width: 7vh;
+          // 變大跟變橘色的動畫
+          transition: $BigAndToOrangeTransition;
+
+          // 描繪路徑動畫
+          svg {
+            path {
+              // 定義SVG路徑描繪的時間函數
+              $SVGPathAnimationTimeFunction: 1s ease-out forwards 0.3s;
+              &.homePagePath {
+                // stroke-dashoffset: 178;
+                animation: NavigationBarPathInhomePagePath $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInhomePagePath {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 178;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.dataPageBigBox {
+                // stroke-dashoffset: 97;
+                animation: NavigationBarPathIndataPageBigBox $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathIndataPageBigBox {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 97;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.dataPageMiddleBox {
+                // stroke-dashoffset: 81;
+                animation: NavigationBarPathIndataPageMiddleBox $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathIndataPageMiddleBox {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 81;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.dataPageSmallBox {
+                // stroke-dashoffset: 61;
+                animation: NavigationBarPathIndataPageSmallBox $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathIndataPageSmallBox {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 61;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.dataPageLine {
+                // stroke-dashoffset: 50;
+                animation: NavigationBarPathIndataPageLine $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathIndataPageLine {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 50;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.chatPageBigChat {
+                // stroke-dashoffset: 144;
+                animation: NavigationBarPathInchatPageBigChat $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInchatPageBigChat {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 144;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.chatPageSmallChat {
+                // stroke-dashoffset: 54;
+                animation: NavigationBarPathInchatPageSmallChat $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInchatPageSmallChat {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 54;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.chatPageMouth {
+                // stroke-dashoffset: 30;
+                animation: NavigationBarPathInchatPageMouth $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInchatPageMouth {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 30;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.visitorPageOuter {
+                // stroke-dashoffset: 129;
+                animation: NavigationBarPathInvisitorPageOuter $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInvisitorPageOuter {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 129;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.visitorPageHead {
+                // stroke-dashoffset: 48;
+                animation: NavigationBarPathInvisitorPageHead $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInvisitorPageHead {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 48;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.visitorPageRightArm {
+                // stroke-dashoffset: 21;
+                animation: NavigationBarPathInvisitorPageRightArm $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInvisitorPageRightArm {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 21;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.visitorPageLeftArm {
+                // stroke-dashoffset: 21;
+                animation: NavigationBarPathInvisitorPageLeftArm $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInvisitorPageLeftArm {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 21;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.visitorPageLeftTopLine {
+                // stroke-dashoffset: 18;
+                animation: NavigationBarPathInvisitorPageLeftTopLine $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInvisitorPageLeftTopLine {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 18;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.visitorPageLeftMiddleLine {
+                // stroke-dashoffset: 18;
+                animation: NavigationBarPathInvisitorPageLeftMiddleLine $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInvisitorPageLeftMiddleLine {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 18;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+              &.visitorPageLeftBottomLine {
+                // stroke-dashoffset: 18;
+                animation: NavigationBarPathInvisitorPageLeftBottomLine $SVGPathAnimationTimeFunction;
+                // 進入啟用狀態表現的動畫
+                @keyframes NavigationBarPathInvisitorPageLeftBottomLine {
+                  // 初始值(即原始狀態)
+                  0% {
+                  }
+                  30% {
+                    stroke-opacity: 0;
+                    stroke-dashoffset: 0;
+                  }
+                  31% {
+                    stroke-dashoffset: 18;
+                  }
+                  40% {
+                    stroke-opacity: 1;
+                  }
+                  60% {
+                  }
+                  80% {
+                  }
+                  100% {
+                    stroke-dashoffset: 0;
+                  }
+                }
+              }
+            }
+          }
+
+        }
+      }
+    }
+  }
+}

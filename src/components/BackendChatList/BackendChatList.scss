@@ -1,0 +1,243 @@
+@import "../../SCSSVariables.scss";
+$MessageListContainerPageBackgroundColor: white;
+$MessageListContainerH1Color: #264653;
+
+.MessageListContainer {
+  background-color: $MessageListContainerPageBackgroundColor;
+  height: $BackendPageInnerHeight;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+//   // 最初進入時的狀態 (一閃即逝，通常不用設定)
+//   &.my-enter {
+//     transition: $CSSTransitionTransition;
+//   }
+//   // 正在進入的狀態
+//   &.my-enter-active {
+//     transition: $CSSTransitionTransition;
+//   }
+//   // 進度完的狀態
+//   &.my-enter-done {
+//     transition: $CSSTransitionTransition;
+//   }
+//   // 最初離開時的狀態 (一閃即逝，通常不用設定)
+//   &.my-exit {
+//     transition: $CSSTransitionTransition;
+//     z-index: -1;
+//   }
+//   // 正在離開時的狀態
+//   &.my-exit-active {
+//     transition: $CSSTransitionTransition;
+//     .blackCoverOnChange {
+//       opacity: 0.08;
+//       transition: $CSSTransitionTransition;
+//     }
+//   }
+//   // 離開完成時的狀態
+//   &.my-exit-done {
+//     transition: $CSSTransitionTransition;
+//   }
+
+  // 頁面跳轉時黑色覆蓋
+  .blackCoverOnChange {
+    position: absolute;
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 900;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  // 標題
+  .logoContainer {
+    height: $BackendHeaderHeight;
+    position: relative;
+    .logo {
+      position: absolute;
+      padding: 2%;
+      padding-left: 4%;
+      left: 0;
+      bottom: 0;
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: $MessageListContainerH1Color;
+    }
+  }
+
+  // 除了標題以外的內容
+  .innerContainer {
+    position: absolute;
+    top: 13%;
+    width: 100%;
+    height: 92%;
+    padding: 0 4%;
+    // 搜索列
+    .searchBarContainer {
+      width: 100%;
+      .searchBarBg {
+        width: 100%;
+        height: 2.4rem;
+        background-color: rgba($color: #000000, $alpha: 0.06);
+        border-top-left-radius: 0.6rem 0.6rem; //寬高
+        border-top-right-radius: 0.6rem 0.6rem;
+        border-bottom-right-radius: 0.6rem 0.6rem;
+        border-bottom-left-radius: 0.6rem 0.6rem;
+        display: flex;
+        align-items: center;
+        .icon {
+          display: inline-block;
+          height: 70%;
+          display: flex;
+          align-items: center;
+          margin-left: 4%;
+          margin-right: 4%;
+          svg {
+            height: 80%;
+            path {
+              color: rgba($color: #000000, $alpha: 0.5);
+            }
+          }
+        }
+        input {
+          border: none;
+          width: 75%;
+          height: 70%;
+          background-color: rgba(255, 0, 0, 0);
+          font-size: 1.2rem;
+          outline: none;
+        }
+      }
+    }
+    // 所有對話紀錄
+    .chatList {
+      overflow-y: scroll;
+      max-height: 85%;
+      margin-top: 5%;
+
+      //尚未与任何顾客交谈
+      .noChatListText {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.9rem;
+        color: #a2a2a2;
+        font-weight: 600;
+      }
+      // 每一筆聊天紀錄，notReadYet表示未讀，show代表顯示此筆紀錄
+      .chatSelfContainer {
+        position: relative;
+        height: 3.8rem;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5%;
+        // 未讀
+        &.notReadYet {
+          // 中間(名字和對話內容)
+          .centerContainer {
+            .centerInnerContainer {
+              .upper {
+                .name {
+                }
+              }
+              .bottom {
+                .chatText {
+                  font-weight: 600;
+                  color: #3b3b3b;
+                }
+              }
+            }
+          }
+          // 右側未讀藍點
+          .dotContainer {
+            opacity: 1;
+            .dot {
+            }
+          }
+        }
+        // 大頭貼
+        .portraitContainer {
+          display: inline-block;
+          height: 100%;
+          border-radius: 50%;
+          overflow: hidden;
+          img {
+            height: 100%;
+          }
+        }
+        // 中間(名字和對話內容)
+        .centerContainer {
+          height: 100%;
+          width: 70%;
+          margin-left: 6%;
+          display: flex;
+          align-items: center;
+          .centerInnerContainer {
+            display: inline-block;
+            width: 100%;
+            // 名字跟對話內容通用屬性
+            & > div {
+              height: 40%;
+              font-family: "Noto Sans TC", sans-serif;
+            }
+            // 名字
+            .upper {
+              display: flex;
+              align-items: center;
+              font-size: 1.2rem;
+              font-weight: 500;
+              color: #3b3b3b;
+            }
+            // 對話內容
+            .bottom {
+              $ChatTextAndDotColor: #a5a5a5;
+              display: flex;
+              align-items: center;
+              color: $ChatTextAndDotColor;
+              .chatText {
+                font-weight: 400;
+                max-width: 70%;
+                overflow: hidden;
+                white-space: nowrap;
+              }
+              .dot {
+                height: 0.2rem;
+                width: 0.2rem;
+                border-radius: 50%;
+                background-color: $ChatTextAndDotColor;
+                margin-left: 4%;
+              }
+              .timeStamp {
+                margin-left: 4%;
+              }
+              & > div {
+                display: inline-block;
+              }
+            }
+          }
+        }
+        // 右側未讀藍點
+        .dotContainer {
+          position: absolute;
+          right: 2%;
+          top: 50%;
+          transform: translate(0, -50%);
+          opacity: 0;
+          pointer-events: none;
+          .dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background-color: #5395e9;
+          }
+        }
+      }
+    }
+  }
+}

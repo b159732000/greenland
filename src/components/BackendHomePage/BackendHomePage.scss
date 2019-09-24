@@ -1,0 +1,892 @@
+@import "../../SCSSVariables.scss";
+//名片放大動畫
+$NameCardFullScreenAnimation: all 0.3s cubic-bezier(0.49, 0.08, 0.32, 0.97) 0s;
+//名片放大字體顏色
+$NameCardFullScreenPrimaryColor: #fff;
+//清單多餘項目的背景色
+$SummaryLastLiPrimaryColor: #fed32c;
+// 展開及摺疊的動畫
+$OpenAndCloseItemAnimation: all 0.5s ease-out;
+// 變模糊的動畫
+$BlurTransition: filter 0.3s ease-out;
+// QRCode頁面出現的動畫
+$QRCodeShowTransition: all 0.3s ease-out;
+
+.BackendHomePage {
+  width: 100vw;
+  height: $BackendPageInnerHeight;
+  top: 0;
+  left: 0;
+  position: fixed;
+  overflow-y: hidden;
+  background-color: #fff;
+
+  // font-family: "Noto Sans TC", sans-serif;
+
+  // QRCode打開時，本頁所有東西變模糊
+  &.qrCodeIsOpen {
+    // 名片變模糊
+    .nameCard {
+      filter: blur(20px);
+    }
+    // 摘要變模糊
+    .summaryContainer {
+      filter: blur(20px);
+    }
+    // QRCode內容
+    .fullPageQRCodeContainer {
+      opacity: 1;
+      pointer-events: all;
+      .blackbg {
+      }
+      .qrCodeContainer {
+        .qrCodePositioner {
+          .qrCode {
+            .qrCodeSelf {
+            }
+          }
+        }
+      }
+    }
+  }
+
+  //最初離開時的狀態 (一閃即逝，通常不用設定)
+  &.my-exit {
+    // opacity: 0;
+    // pointer-events: none;
+  }
+  //正在離開時的狀態
+  &.my-exit-active {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  //名片
+  .nameCard {
+    width: 100%;
+    height: 14%;
+    position: relative;
+    background: linear-gradient(45deg, #ffa121, #ffd139);
+    -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.25);
+    color: #333333;
+    filter: blur(0px);
+    transition: $BlurTransition;
+
+    // 背景圖片(透明菱格紋)
+    .bgImg {
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-image: url("../../images/Backend/HomePage/NameCardBg.png");
+    }
+
+    background-size: 100% 100%;
+    //通用屬性
+    & > div {
+      display: inline-block;
+      height: 100%;
+      position: absolute;
+      top: 0;
+    }
+    //大頭貼
+    .portraitContainer {
+      width: 20%;
+      left: 10%;
+      .portrait {
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    //基本資訊
+    .personalInfo {
+      width: 30%;
+      left: 30%;
+      position: relative;
+
+      //通用屬性
+      & > div {
+      }
+      .upper {
+        height: 55%;
+        display: flex;
+        align-items: flex-end;
+        font-size: 1.3rem;
+        white-space: nowrap;
+      }
+      .bottom {
+        height: 47%;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: flex-start;
+        // opacity: 0;
+        & > div {
+          display: inline-block;
+          margin-right: 3%;
+        }
+      }
+    }
+    //編輯列
+    .editBar {
+      width: 35%;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      & > div {
+        width: 1.4rem;
+        height: 1.4rem;
+        svg {
+          width: 100%;
+          height: 100%;
+          fill: #333333;
+        }
+      }
+      .editIcon {
+      }
+      .qrCodeIcon {
+        margin-left: 10%;
+      }
+      .backToProjectPage {
+        margin-left: 10%;
+        position: relative;
+        a {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  //摘要
+  .summaryContainer {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 86%;
+    color: #333333;
+    filter: blur(0px);
+    transition: $BlurTransition;
+    //完整的一個摺疊項
+    .fullItem {
+      //啟用的項目
+      &.active {
+        // 標題
+        .title {
+          // 啟用時的黑色三角形
+          .icon {
+            img {
+              transform: rotate(90deg);
+            }
+          }
+        }
+        // 內容
+        .innerContainer {
+          .mostPopularHouseStyle {
+            max-height: 25rem;
+            opacity: 1;
+            pointer-events: none;
+          }
+          .rencentlyChatCustomer {
+            max-height: 30rem;
+            opacity: 1;
+            pointer-events: none;
+          }
+          .highPurchaceIntentionCustomer {
+            max-height: 50rem;
+            opacity: 1;
+            pointer-events: none;
+          }
+        }
+      }
+
+      // 最後一個完整項目要有底陰影
+      &.HighPurchaseIntentionCustomer {
+        -webkit-box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.03);
+        -moz-box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.03);
+        box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.03);
+      }
+
+      //標題
+      .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4% 6%;
+        position: relative;
+        // title閉合時的底線
+        &:not(:last-child)::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background-color: #e4e4e4;
+        }
+        .text {
+          font-size: 0.8rem;
+        }
+        // 黑色三角形
+        .icon {
+          img {
+            width: 0.5rem;
+            height: 0.5rem;
+            transform: rotate(0deg);
+            transition: $OpenAndCloseItemAnimation;
+          }
+        }
+      }
+
+      //內容 (大頭貼清單)
+      .innerContainer {
+        position: relative;
+        background-color: #f4f1e7;
+
+        // 最受歡迎戶型
+        .mostPopularHouseStyle {
+          max-height: 0rem;
+          overflow: hidden;
+          pointer-events: none;
+          opacity: 0;
+          transition: $OpenAndCloseItemAnimation;
+          // 為了做出內陰影，並且左右不要有陰影
+          &::after {
+            content: "";
+            -webkit-box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            -moz-box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            position: absolute;
+            width: 103%;
+            height: 100%;
+            top: 0;
+            left: -1.5%;
+          }
+          // 每一個戶型
+          .itemContainer {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4% 10%;
+            height: 4rem;
+            overflow: hidden;
+            // 尚未有顾客造访你的微沙盘
+            .noDataText {
+              width: 100%;
+              text-align: center;
+              font-size: 0.9rem;
+              color: #a2a2a2;
+              font-weight: 600;
+            }
+            // 每一項底下的橫線(除了最後一項)
+            &:not(:last-child)::after {
+              content: "";
+              display: block;
+              height: 1px;
+              width: 90%;
+              left: 5%;
+              position: absolute;
+              bottom: 0;
+              background-color: #e4e4e4;
+            }
+            // 左側(排名+戶型)
+            .left {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              & > div {
+              }
+              .number {
+                margin-right: 6%;
+                color: rgb(97, 97, 97);
+                font-weight: 300;
+                font-size: 0.9rem;
+                margin-right: 0.6rem;
+              }
+              .houseStyle {
+                width: 3.6rem;
+                height: 1.6rem;
+                padding: 0.15rem 0;
+                text-align: center;
+                background: linear-gradient(#f7cc3e, #ffa121);
+                border-radius: 0.5rem;
+                font-size: 0.8rem;
+                font-weight: 400;
+              }
+            }
+            // 右側(戶型大小和訪問次數)
+            .right {
+              color: #888888;
+              font-size: 0.6rem;
+              .upper {
+              }
+              .bottom {
+              }
+            }
+          }
+        }
+
+        // 最近交談的客戶
+        .rencentlyChatCustomer {
+          max-height: 0rem;
+          overflow: hidden;
+          pointer-events: none;
+          opacity: 0;
+          transition: $OpenAndCloseItemAnimation;
+          // 為了做出內陰影，並且左右不要有陰影
+          &::after {
+            content: "";
+            -webkit-box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            -moz-box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            position: absolute;
+            width: 103%;
+            height: 100%;
+            top: 0;
+            left: -1.5%;
+          }
+          // 每一個人
+          .itemContainer {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4% 10%;
+            height: 4.5rem;
+            overflow: hidden;
+            // 尚未有顾客造访你的微沙盘
+            .noDataText {
+              width: 100%;
+              text-align: center;
+              font-size: 0.9rem;
+              color: #a2a2a2;
+              font-weight: 600;
+            }
+            // 每一項底下的橫線(除了最後一項)
+            &:not(:last-child)::after {
+              content: "";
+              display: block;
+              height: 1px;
+              width: 90%;
+              left: 5%;
+              position: absolute;
+              bottom: 0;
+              background-color: #e4e4e4;
+            }
+            // 連結到顧客頁面
+            & > a {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              pointer-events: all;
+              z-index: 10;
+            }
+            // 左側(排名+戶型)
+            .left {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              position: relative;
+              // 大頭貼
+              .potrait {
+                width: 3rem;
+                height: 3rem;
+                border-radius: 50%;
+                overflow: hidden;
+                margin-right: 0.6rem;
+                position: relative;
+                // 未讀紅點
+                .unreadRedDot {
+                  width: 0.6rem;
+                  height: 0.6rem;
+                  background-color: red;
+                  right: 6%;
+                  bottom: 6%;
+                  border-radius: 50%;
+                  position: absolute;
+                  &.readed {
+                    opacity: 0;
+                    pointer-events: none;
+                  }
+                }
+                img {
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+            }
+            // 右側(戶型大小和訪問次數)
+            .right {
+              color: #888888;
+              font-size: 0.6rem;
+              display: flex;
+              align-items: center;
+            }
+          }
+          // 更多按鈕
+          .morePositioner {
+            display: flex;
+            justify-content: center;
+            padding: 1% 0% 3% 0%;
+            .moreContainer {
+              .text {
+                color: #b4a982;
+                font-size: 0.7rem;
+              }
+              .icon {
+                // height: 0.5rem;
+                line-height: 0;
+                text-align: center;
+                svg {
+                  height: 0.7rem;
+                  width: 0.3rem;
+                  pointer-events: none;
+                  transform: rotate(90deg);
+                }
+              }
+            }
+          }
+        }
+
+        // 購買意願較高的客戶
+        .highPurchaceIntentionCustomer {
+          max-height: 0rem;
+          overflow: hidden;
+          position: relative;
+          pointer-events: none;
+          opacity: 0;
+          transition: $OpenAndCloseItemAnimation;
+          padding: 0 0 0 7vw;
+          // 尚未有顾客造访你的微沙盘
+          .noDataText {
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #a2a2a2;
+            font-weight: 600;
+            height: 4.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          // padding: 1rem 5% 3.5rem 5%;
+          // 為了做出內陰影，並且左右不要有陰影
+          &::after {
+            content: "";
+            -webkit-box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            -moz-box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            position: absolute;
+            width: 103%;
+            height: 100%;
+            top: 0;
+            left: -1.5%;
+          }
+          // 每一個客戶
+          .itemContainer {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 27vw;
+            padding: 0.5rem 0;
+            margin: 0.5rem 3vw 0.5rem 0;
+            position: relative;
+            & > div {
+              display: inline-block;
+            }
+
+            // 連結到顧客頁面
+            & > a {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              pointer-events: all;
+              z-index: 10;
+            }
+            .left {
+              width: 8vw;
+              height: 8vw;
+              // height: 2.5rem;
+              // width: 2.5rem;
+              border-radius: 50%;
+              overflow: hidden;
+              margin-right: 1.3vw;
+              img {
+                height: 100%;
+                width: 100%;
+              }
+            }
+            .right {
+              width: 17vw;
+              .name {
+                width: 100%;
+                font-size: 0.8rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+              .visitTimes {
+                width: 100%;
+                font-size: 0.7rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+            }
+          }
+          // 更多按鈕
+          .morePositioner {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 1% 0% 3% 0%;
+            bottom: 0;
+            left: 0;
+            position: relative;
+            &::after {
+              content: "";
+              width: 90%;
+              height: 1px;
+              position: absolute;
+              top: 0;
+              left: 5%;
+              background: #e4e4e4;
+            }
+            .moreContainer {
+              .text {
+                color: #b4a982;
+                font-size: 0.7rem;
+              }
+              .icon {
+                // height: 0.5rem;
+                line-height: 0;
+                text-align: center;
+                svg {
+                  height: 0.7rem;
+                  width: 0.3rem;
+                  pointer-events: none;
+                  transform: rotate(90deg);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  //全螢幕QRCode
+  .fullPageQRCodeContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-weight: bold;
+    font-family: "Cooper";
+    opacity: 0;
+    pointer-events: none;
+    transition: $QRCodeShowTransition;
+
+    //模糊背景
+    // .blurBg {
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    //   width: 100%;
+    //   height: 100%;
+    // }
+
+    //黑色背景
+    .blackbg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: hsla(0, 0%, 0%, 0.76);
+    }
+
+    //QRCODE及標題
+    .qrCodeContainer {
+      position: absolute;
+      width: 100%;
+      height: 45%;
+      top: 10%;
+      left: 0%;
+      .textContainer {
+        height: 13%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+      }
+      .qrCodePositioner {
+        // height: 87%;
+        display: flex;
+        justify-content: center;
+        .qrCode {
+          background-color: rgb(255, 255, 255);
+          border-radius: 1.2rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0%;
+          // height: 100%;
+          #qrCodeCanvas {
+            border: 1px solid #000;
+            width: 35vh !important;
+            height: 35vh !important;
+            border-radius: 1.2rem;
+            // fillStyle: #000;
+          }
+          .qrCodeSelf {
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    //網址及標題
+    .linkContainer {
+      position: absolute;
+      width: 100%;
+      height: 7%;
+      top: 60%;
+      left: 0%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      .text {
+        width: 100%;
+        text-align: center;
+      }
+      .link {
+        // width: 100%;
+        text-align: center;
+        max-width: 80%;
+        -webkit-touch-callout: auto;
+        -webkit-user-select: auto;
+        -khtml-user-select: auto;
+        -moz-user-select: auto;
+        -ms-user-select: auto;
+        user-select: auto;
+      }
+    }
+
+    //返回鈕
+    .backButtonContainer {
+      position: absolute;
+      width: 100%;
+      height: 4.8rem;
+      top: 80%;
+      left: 0%;
+      display: flex;
+      justify-content: center;
+      svg {
+        height: 100%;
+        path {
+          stroke: white;
+          stroke-width: 2;
+          stroke-linecap: round;
+          fill: none;
+        }
+      }
+    }
+  }
+
+  // 輸入銷售基本資訊
+  .editSalerInfo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+  &.hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+    // 黑色背景
+    .blackBg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: hsla(0, 0%, 0%, 0.76);
+    }
+
+    // 輸入表格
+    .formContainer {
+      position: absolute;
+      width: 65vw;
+      height: 50vh;
+      background-color: #fff;
+      top: 47vh;
+      left: 50vw;
+      transform: translate(-50%, -50%);
+      border-radius: 0.5rem;
+
+      // 請輸入妳的資訊
+      .topTitle {
+        text-align: center;
+        margin: 7% 0;
+        font-weight: 600;
+      }
+
+      // 輸入欄位
+      .form {
+        height: 60%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+        & > div {
+          background-color: #F4F8F7;
+          height: 20%;
+          width: 80%;
+          position: relative;
+          display: inline-flex;
+          align-items: top;
+          .icon {
+            height: 100%;
+            display: inline-block;
+            width: 20%;
+          }
+          .input {
+            width: 80%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            input {
+              width: 100%;
+              background-color: #F4F8F7;
+              border: none;
+            }
+          }
+        }
+        // 名字
+        .name {
+          .icon {
+            position: relative;
+            .svgSelf {
+              position: absolute;
+              height: 50%;
+              width: 50%;
+              right: 10%;
+              top: 50%;
+              transform: translate(0, -50%);
+              svg {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          .input {
+            padding-left: 0.3rem;
+          }
+        }
+        // 職稱
+        .jobTitle {
+          .icon {
+            position: relative;
+            .svgSelf {
+              position: absolute;
+              height: 50%;
+              width: 50%;
+              right: 10%;
+              top: 50%;
+              transform: translate(0, -50%);
+              svg {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          .input {
+            padding-left: 0.3rem;
+          }
+        }
+        // 手機號碼
+        .phoneNumber {
+          .icon {
+            position: relative;
+            .svgSelf {
+              position: absolute;
+              height: 50%;
+              width: 50%;
+              right: 10%;
+              top: 50%;
+              transform: translate(0, -50%);
+              svg {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          .input {
+            padding-left: 0.3rem;
+          }
+        }
+      }
+
+      // 確認或返回鈕
+      .buttonContainer {
+        height: 20%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16%;
+        .confirm,
+        .cancel {
+          height: 45%;
+          width: 40%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-top-left-radius: 30% 50%;  // x, y
+          border-top-right-radius: 30% 50%;
+          border-bottom-right-radius: 30% 50%;
+          border-bottom-left-radius: 30% 50%;
+          span {
+            font-size: 0.8rem;
+            font-weight: 600;
+          }
+        }
+        .confirm {
+          background-color: #f4a926b8;
+          color: #080808;
+        }
+        .cancel {
+          background-color: #c1c1c1b8;
+          color: #6f6f6f;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,346 @@
+@import '../../SCSSVariables.scss';
+$ChatPageContainerPageBackgroundColor: white;
+$ChatPageH1Color: #030227; //客戶姓名(標題)
+$ChatPageName: #030227; //聊天紀錄中間的彼此姓名顏色
+$ChatPageText: white; //聊天紀錄內容顏色
+$MySentenceBgColor: rgba(0, 0, 0, 0.1); //我說的話的背景色
+$YourSentenceBgColor: white; //對方說的話的背景色
+$YourSentenceBdColor: rgba(0, 0, 0, 0.1); //對方說的話的邊框顏色
+
+.ChatPageContainer {
+  background-color: $ChatPageContainerPageBackgroundColor;
+  height: 100%;
+  // padding-bottom: 3vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+
+  .debugConsole {
+    position: fixed;
+    background-color: #000;
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* 禁止選取 */
+  -webkit-touch-callout: auto;
+  -webkit-user-select: auto;
+  -khtml-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  * {
+    /* 禁止選取 */
+    -webkit-touch-callout: auto;
+    -webkit-user-select: auto;
+    -khtml-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+
+  // 頁面跳轉時黑色覆蓋
+  .blackCoverOnChange {
+    position: absolute;
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 900;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  // 頂部固定列
+  .topContainer {
+    background-color: #fafafa;
+    border-bottom: 1px solid #70707049;
+    height: $ContactBarHeight;
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 3%;
+    // 第一層子div通用屬性
+    & > div {
+      display: inline-block;
+      height: 100%;
+    }
+    // 回上一頁
+    .backButtonContainer {
+      width: 10%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        height: 80%;
+        max-width: 1.3rem;
+      }
+    }
+    // 大頭貼和姓名
+    .centerContainer {
+      display: flex;
+      align-items: center;
+      width: 75%;
+      padding-left: 3%;
+      border: 1px solid #000;
+      // 大頭貼
+      .portraitContainer {
+        display: inline-block;
+        height: 90%;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+          height: 100%;
+        }
+      }
+      // 姓名
+      .name {
+        padding-left: 3%;
+        display: inline-block;
+        color: $ChatPageH1Color;
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+    }
+    // 電話按鈕
+    .infoContainer {
+      width: 15%;
+      height: 100%;
+      // border: 1px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        height: 100%;
+        max-width: 1.7rem;
+      }
+    }
+  }
+
+  // 對話紀錄及聊天方塊
+  .chatPageInnerContainer {
+    height: 90%;
+    position: relative;
+
+    // border: 1px solid #000;
+    // 對話紀錄
+    .dialogContainer {
+      height: 90%;
+      overflow-y: scroll;
+      ul {
+        li {
+          margin-top: 2%;
+          margin-bottom: 2%;
+        }
+        // 我的每一段話
+        li.mySentence {
+          // 性名列
+          .nameBarContainer {
+            height: 2rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            // 姓名
+            .name {
+              display: inline-block;
+              font-size: 1.1rem;
+              font-weight: 600;
+              margin-right: 5%;
+            }
+            // 大頭貼
+            .portraitContainer {
+              display: inline-block;
+              height: 90%;
+              border-radius: 50%;
+              overflow: hidden;
+              margin-left: 5%;
+              margin-right: 3%;
+              img {
+                height: 100%;
+              }
+            }
+          }
+          // 文字列
+          .textContainer {
+            display: flex;
+            width: 100%;
+            justify-content: flex-end;
+            margin-top: 1%;
+            .text {
+              background-color: $MySentenceBgColor;
+              text-align: end;
+              min-width: 50px;
+              max-width: 90%;
+              // padding: 1.1rem 20px;
+              padding: 0.7rem 20px;
+              font-size: 1rem;
+              border-top-left-radius: 1.3rem 50%; //寬高
+              border-top-right-radius: 0 0;
+              border-bottom-right-radius: 0 0;
+              border-bottom-left-radius: 1.3rem 50%;
+            }
+          }
+          // 時間列
+          .timeContainer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1%;
+            .time {
+              padding-right: 10px;
+              font-size: 0.7rem;
+              color: rgba(0, 0, 0, 0.61);
+            }
+          }
+        }
+        // 對方的每一段話
+        li.yourSentence {
+          // 性名列
+          .nameBarContainer {
+            height: 2rem;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            // 姓名
+            .name {
+              display: inline-block;
+              font-size: 1.1rem;
+              font-weight: 600;
+            }
+            // 大頭貼
+            .portraitContainer {
+              display: inline-block;
+              height: 90%;
+              border-radius: 50%;
+              overflow: hidden;
+              margin-left: 5%;
+              margin-right: 3%;
+              img {
+                height: 100%;
+              }
+            }
+          }
+          // 文字列
+          .textContainer {
+            display: flex;
+            width: 100%;
+            justify-content: flex-start;
+            margin-top: 1%;
+            .text {
+              border: 1px solid $YourSentenceBdColor;
+              background-color: $YourSentenceBgColor;
+              text-align: start;
+              min-width: 50px;
+              max-width: 90%;
+              // padding: 1.1rem 20px;
+              padding: 0.7rem 20px;
+              font-size: 1rem;
+              border-top-right-radius: 1.3rem 50%; //寬高
+              border-top-left-radius: 0 0;
+              border-bottom-left-radius: 0 0;
+              border-bottom-right-radius: 1.3rem 50%;
+            }
+          }
+          // 時間列
+          .timeContainer {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 1%;
+            .time {
+              padding-left: 10px;
+              font-size: 0.7rem;
+              color: rgba(0, 0, 0, 0.61);
+            }
+          }
+        }
+      }
+    }
+    // 文字輸入方塊
+    .textBoxContainer {
+      background-color: #fff;
+      position: absolute;
+      bottom: 0;
+      height: 3rem;
+      width: 100%;
+      padding: 0 6%;
+      .innerContainer {
+        width: 100%;
+        height: 100%;
+        // 搜索列
+        .searchBarContainer {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          .searchBarBg {
+            width: 100%;
+            height: 2.4rem;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-top-left-radius: 1.1rem 50%; //寬高
+            border-top-right-radius: 1.1rem 50%;
+            border-bottom-right-radius: 1.1rem 50%;
+            border-bottom-left-radius: 1.1rem 50%;
+            display: flex;
+            align-items: center;
+            .icon {
+              display: inline-block;
+              height: 70%;
+              display: flex;
+              align-items: center;
+              margin-left: 4%;
+              margin-right: 4%;
+              svg {
+                height: 80%;
+                path {
+                  color: rgba($color: #000000, $alpha: 0.5);
+                }
+              }
+            }
+            .sendIcon {
+              display: inline-block;
+              position: absolute;
+              right: 0;
+              width: 9%;
+              height: 55%;
+              display: flex;
+              align-items: center;
+              margin-left: 4%;
+              margin-right: 4%;
+              svg {
+                height: 80%;
+                path {
+                  fill: rgba($color: #3DA4EE, $alpha: 1);
+                }
+              }
+              .sendText {
+                font-weight: 600;
+                color: #3DA4EE;
+                white-space: nowrap;
+              }
+            }
+            input {
+              border: none;
+              width: 75%;
+              height: 70%;
+              background-color: rgba(255, 0, 0, 0);
+              font-size: 1.2rem;
+              outline: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}

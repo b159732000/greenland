@@ -67,6 +67,7 @@ export function Bsend(data) {
   })
 }
 
+// 取得销售人员的资讯
 export function GetHomeBInfo(data) {
   return request({
     url: '/api/GetHomeBInfo',

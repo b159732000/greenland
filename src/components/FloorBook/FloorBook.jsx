@@ -3,6 +3,16 @@ import './FloorBook.scss'
 import Swiper from 'react-id-swiper'
 
 const FloorBook = () => {
+    useEffect(()=>{
+        var handler = function(e){
+            e.preventDefault();
+            }
+            document.addEventListener('touchmove', handler, false);//阻止默认事件
+            return()=>{
+                document.removeEventListener('touchmove', handler, false);//打开默认事件
+            }
+    }, [])
+
     // Swiper區域
     const [swiper, updateSwiper] = useState();
     const goNext = () => {
