@@ -49,7 +49,7 @@ service.interceptors.response.use(
       if (res.res === 0) {
         return Promise.resolve(res)
       } else if (res.res === 1) {
-        alert.error(res.msg);
+        // alert.error(res.msg);
         // MessageBox.alert(res.msg)
         return Promise.reject(res)
       } else if (res.res === 2) {
@@ -68,7 +68,7 @@ service.interceptors.response.use(
         return Promise.reject(res)
       }
     } else {
-      alert.error(status);
+      // alert.error(status);
       // 写入错误信息
       ErrorCb('网络连接出错, error_code: ' + status)
       return Promise.reject(res)

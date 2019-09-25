@@ -64,7 +64,7 @@ service.interceptors.response.use(
       }
     } else {
       // 写入错误信息
-      ErrorCb('网络连接出错, error_code: ' + status)
+      // ErrorCb('网络连接出错, error_code: ' + status)
       return Promise.reject(res)
     }
   },

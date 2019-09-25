@@ -258,6 +258,7 @@ export function PageVisitCount(data) {
     }
   })
 }
+
 // 分享路径
 export function VisitedTraceP2(id) {
   return request({
@@ -269,6 +270,7 @@ export function VisitedTraceP2(id) {
     }
   })
 }
+
 // 消息已读
 export function ClearUnread(b_openid, c_openid) {
   return request({
@@ -281,6 +283,7 @@ export function ClearUnread(b_openid, c_openid) {
     }
   })
 }
+
 // 我的 儲存个人信息到服務器
 export function setStaffInfo(data) {
   return request({

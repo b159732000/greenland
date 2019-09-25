@@ -1,4 +1,5 @@
 圖層順序
+    後台導行列 BackendNavigationBar 10001000
     後台容器 BackendContainer 9999999
 
     聊天列 ContactBar 99999

@@ -3,9 +3,11 @@ import "./BackendChatPage.scss";
 import { Bsend, getHistory, ClearUnread } from "../../api/Backend/api";
 import { getUuid } from "../../utils/util.js";
 import { exports } from "../../utils/webmain";
+import socket from '../../utils/socket';
+import events from '../../utils/events';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setMessagelist, pushMessage } from "../../actions/chatPage.js";
+import { setMessagelist, pushMessage, setSocket, clearMessageList } from "../../actions/chatPage.js";
 import store from "../../utils/store";
 import stroage from "../../api/stroage";
 import { DiaplayTime, over48hours } from "../../utils/diaplayTime";
@@ -23,14 +25,28 @@ const BackendChatPage = (props) => {
     // Store
     const storeMessageList = useSelector(state => state.chat.messagelist);  // 聊天頁面的聊天文字
     const storeCInfo = useSelector(state => state.chat.c_info);             // 顧客資訊
+    const storeSocket = useSelector(state => state.socket);
     // Dispatch
     const dispatch = useDispatch();
-    const setStoreMessageList = (value) => dispatch(pushMessage(value));    // 更新聊天頁面的聊天文字
+    const setStoreMessageList = (value) => dispatch(pushMessage(value)); 
+    const clearStoreMessageList = () => dispatch(clearMessageList());   // 更新聊天頁面的聊天文字
+    const setStoreSocket = (value) => dispatch(setSocket(value));
 
     useEffect(() => {
         setTimeout(() => {
             // 捲動對話紀錄到最底端
             // dialogContainerDOM.scrollTop = dialogContainerDOM.scrollHeight;
+
+            let _this = {
+                setStoreMessageList: (value) => setStoreMessageList(value),
+            };
+
+            if (!storeSocket) {
+                socket(_this).then((socket) => {
+                    setStoreSocket(socket);
+                    events(_this, socket);
+                })
+            }
 
             setBOpenID(stroage.get('userInfo').openid);
             setCOpenID(storeCInfo.openid);
@@ -49,7 +65,9 @@ const BackendChatPage = (props) => {
         }, 400);
 
         return () => {
-            setStoreMessageList([]);
+            console.log('離開 BackendChatPage, 清空 store message list');
+            // setStoreMessageList([]);
+            clearStoreMessageList([]);
         }
     }, [])
 
@@ -59,8 +77,9 @@ const BackendChatPage = (props) => {
     }, [bOpenID, cOpenID, avataUrl])
 
     useEffect(() => {
-        console.log(storeCInfo);
-        console.log(storeMessageList);
+        // console.log(storeCInfo);
+        // console.log(storeMessageList);
+        dialogContainerDOM.current.scrollTop = dialogContainerDOM.current.scrollHeight;
     }, [storeCInfo, storeMessageList])
 
     // 當 store messageList 有新訊息，將對話框容器捲到最下方
@@ -75,7 +94,9 @@ const BackendChatPage = (props) => {
 
     // 清除未读消息
     const thisPageClearUnread = () => {
-        ClearUnread(bOpenID, cOpenID).then(res => console.log(res))
+        ClearUnread(bOpenID, cOpenID).then(
+            // res => console.log(res)
+            )
     }
 
     // 取得歷史聊天紀錄，並放到 Store MessageList 中
@@ -86,6 +107,7 @@ const BackendChatPage = (props) => {
             other_openid: cOpenID // open_id
         }).then(res => {
             if (res.data) {
+                clearStoreMessageList();
                 setStoreMessageList(res.data.reverse());
             }
         });
@@ -100,6 +122,19 @@ const BackendChatPage = (props) => {
     const sendmsg = () => {
         // 使用 state 中的 message 內容，建立一個 message object
         let tempMessage = structureMessage("text", { message: message });
+
+        console.log(tempMessage);
+        // b_openid: "oRbr0w4RNYkdxuBZvkB5oUxI7QkQ"
+        // c_openid: "oRbr0w4RNYkdxuBZvkB5oUxI7QkQ"
+        // content: "7283"
+        // create_time: 1569400300
+        // fail: false
+        // logo: "http://thirdwx.qlogo.cn/mmopen/vi_32/AcJM5WNhE04JYmoZVWbssORUTxp5ygQ1WiaX1k3Yq0V3AutJ75lZQibe3YXqY6ZKmd9iaLGf6KuAULhk0tlAZTAUA/132"
+        // mine: true
+        // msg_id: "It9WAFuZQXLzabE4BTv20IYlRErYUSzw"
+        // msg_type: "text"
+        // name: "James 呂國禾"
+        // pid: 2
 
         // 如果state message有內容，則檢驗目前是甚麼裝置
         // 接著傳送當前的訊息物件到伺服器

@@ -51,7 +51,10 @@
     transform: translate(0, -50%);
     .iconContainer {
       height: 100%;
-      & > div {
+      & > div, & > a {
+        &.hide {
+          display: none;
+        }
         height: 100%;
         display: inline-block;
         margin-left: 1.5rem;

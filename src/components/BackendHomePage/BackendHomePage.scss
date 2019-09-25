@@ -685,7 +685,10 @@ $QRCodeShowTransition: all 0.3s ease-out;
       .link {
         // width: 100%;
         text-align: center;
-        max-width: 80%;
+        width: 80%;
+        // white-space: pre-line;
+        word-break: break-all;
+        // max-width: 80%;
         -webkit-touch-callout: auto;
         -webkit-user-select: auto;
         -khtml-user-select: auto;

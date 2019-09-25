@@ -13,24 +13,45 @@ import QRCode from 'qrcode'
 
 // 微信数据
 import { setClientInfoAction } from '../../actions/chatPage.js'
+import storage from '../../api/stroage';
 
 // 为了达成<<在没有数局时，显示替代文字>>，必须在此定义变数
 let popularHouseListDOMElement, mountRecentlyChatListDOMElement, mountHighIntentionCustomerListDOMElement;
 
 const BackendHomePage = () => {
-    const dispatch = useDispatch();
-
-    // 销售人员资讯
-    const clientInfo = useSelector(state => state.chat.clientInfo);
-    const setClientInfo = (value) => dispatch(setClientInfoAction(value));
-
+    // Ref
     const clientUserNameDOM = useRef();
     const clientUserPositionDOM = useRef();
     const clientUserPhoneDOM = useRef();
-
+    // State
     const [QRCodeIsOpen, setQRCodeIsOpen] = useState(false);
-    const [CustomerWebSiteUrl, setCustomerWebSiteUrl] = useState('http://hvr.isunupcg.com/GreenLand/HomePage');
+    const [CustomerWebSiteUrl, setCustomerWebSiteUrl] = useState('http://hvr.isunupcg.com/GreenLand/');
     const [isEditingCustomerInfo, setisEditingCustomerInfo] = useState(false);
+    // Store
+    // 销售人员资讯
+    const clientInfo = useSelector(state => state.chat.clientInfo);
+    const setClientInfo = (value) => dispatch(setClientInfoAction(value));
+    // Dispatch
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        let user_type = (storage.get('user_type') > 2);
+        share({ pid: window.pid, transfer: (!user_type && window.location.href.indexOf('b') > -1) ? 1 : 0 }).then(res => {
+            var _shareid = res.data.share_id
+            var _href = 'http://hvr.isunupcg.com/GreenLand?b=' + _shareid + '&s=1'
+            setCustomerWebSiteUrl(_href);
+        })
+    }, [])
+
+    useEffect(() => {
+        initQrCode();
+    }, [CustomerWebSiteUrl])
+
+    useEffect(()=>{
+        console.log('目前store的clientInfo↓↓↓');
+        console.log(clientInfo)
+        console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑');
+    }, [clientInfo])
 
     // 後臺打開銷售編輯視窗按鈕點擊觸發
     const handleEditIconClick = () => {
@@ -83,7 +104,7 @@ const BackendHomePage = () => {
                 ...newUserData,
                 occupation: res.data.user_info.occupation
             }
-            
+
             setClientInfo(newUserData);
             // this.setState({
             //     MyclientInfo: res.data.user_base,
@@ -95,8 +116,47 @@ const BackendHomePage = () => {
         })
     }
 
+    // 初始化QRCode
+    const initQrCode = () => {
+        // 渲染QRCode
+        QRCode.toCanvas(document.getElementById('qrCodeCanvas'), CustomerWebSiteUrl, { errorCorrectionLevel: 'H' }, function (error) {
+            if (error) console.error(error)
+            console.log('success!');
+        })
+    }
+    //QRCode顯示時，點選網址觸發
+    const handleQRCodeLinkOnClick = () => {
+        copyStringToClipboard(CustomerWebSiteUrl);
+    }
+    // 複製文字 (在此專案由handleQRCodeLinkOnClick()觸發，用來複製微沙盤連結)
+    const copyStringToClipboard = (str) => {
+        // Create new element
+        var el = document.createElement('textarea');
+        // Set value (string to be copied)
+        el.value = str;
+        // Set non-editable to avoid focus and move outside of view
+        el.setAttribute('readonly', '');
+        el.style = { position: 'absolute', left: '-9999px' };
+        document.body.appendChild(el);
+        // Select text inside element
+        el.select();
+        // Copy text to clipboard
+        document.execCommand('copy');
+        // Remove temporary element
+        document.body.removeChild(el);
+
+        /* Alert the copied text */
+        // alert("Copied the text: " + str);
+        alert("微沙盘分享连结已复制");
+    }
+    //QRCode顯示時，點擊返回鈕時觸發
+    const handleQRCodeBackButtonOnClick = () => {
+        //關閉QRCode全螢幕
+        setQRCodeIsOpen(false);
+    }
+
     return (
-        <div className="BackendHomePage">
+        <div className={(QRCodeIsOpen) ? ("BackendHomePage qrCodeIsOpen") : ("BackendHomePage")}>
             {/* 名片 */}
             <div className="nameCard">
                 {/* 背景圖片(透明菱格紋) */}
@@ -132,7 +192,7 @@ const BackendHomePage = () => {
                     </div>
                     {/* 返回微沙盤 */}
                     <div className="backToProjectPage">
-                        <Link to='/GreenLand/HomePage'></Link>
+                        <Link to='/GreenLand'></Link>
                         <svg t={1565836110200} className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id={7828} width={200} height={200}><path d="M981.333333 896a85.426667 85.426667 0 0 1-85.333333 85.333333h-170.666667a85.333333 85.333333 0 0 1 0-170.666666h21.333334a106.666667 106.666667 0 0 1 173.093333 3.333333 85.333333 85.333333 0 0 1 61.573333 82z m-170.666666-192V234.666667a21.333333 21.333333 0 0 1 21.333333-21.333334h64a42.713333 42.713333 0 0 1 42.666667 42.666667v448a21.333333 21.333333 0 0 1-21.333334 21.333333h-85.333333a21.333333 21.333333 0 0 1-21.333333-21.333333z m42.666666-277.333333h42.666667V341.333333h-42.666667z m0 128h42.666667V469.333333h-42.666667z m0 128h42.666667V597.333333h-42.666667z m-170.666666 85.333333a85.426667 85.426667 0 0 0-85.333334 85.333333v106.666667a21.333333 21.333333 0 0 1-21.333333 21.333333H64a21.333333 21.333333 0 0 1 0-42.666666h64v-89.5c-10.873333-4.526667-20.14-12.666667-27.04-23.953334C90.446667 808 85.333333 784.06 85.333333 752c0-31.2 5-66.666667 13.38-94.84 4.613333-15.513333 10-28.14 16.093334-37.526667C126.72 601.2 140.16 597.333333 149.333333 597.333333s22.613333 3.866667 34.526667 22.3c6.066667 9.386667 11.48 22 16.093333 37.526667C208.333333 685.333333 213.333333 720.8 213.333333 752c0 32.06-5.113333 56-15.626666 73.213333-6.9 11.293333-16.166667 19.426667-27.04 23.953334V938.666667h128V183.893333a106.666667 106.666667 0 0 1 96.053333-106.14l349.826667-34.98A21.333333 21.333333 0 0 1 768 64v647.333333a21.333333 21.333333 0 0 1-14.22 20.106667 107.12 107.12 0 0 0-43.946667 29.486667 21.333333 21.333333 0 0 1-15.893333 7.106666z m-213.333334-42.666667h-42.666666v85.333334h42.666666z m0-128h-42.666666v85.333334h42.666666z m0-128h-42.666666v85.333334h42.666666z m0-128h-42.666666v85.333334h42.666666z m0-128h-42.666666v85.333334h42.666666z m85.333334 512h-42.666667v85.333334h42.666667z m0-128h-42.666667v85.333334h42.666667z m0-128h-42.666667v85.333334h42.666667z m0-128h-42.666667v85.333334h42.666667z m0-128h-42.666667v85.333334h42.666667z m85.333333 384h-42.666667v85.333334h42.666667z m0-128h-42.666667v85.333334h42.666667z m0-128h-42.666667v85.333334h42.666667z m0-128h-42.666667v85.333334h42.666667z" fill="#333333" p-id={7829} /></svg>
                     </div>
                 </div>
@@ -148,7 +208,7 @@ const BackendHomePage = () => {
                 <div className="blackbg"></div>
 
                 {/* QRCODE及標題 */}
-                <div className="qrCodeContainer" onClick={() => this.handleQRCodeLinkOnClick()}>
+                <div className="qrCodeContainer" onClick={() => handleQRCodeLinkOnClick()}>
                     {/* 標題 */}
                     <div className="textContainer">
                         <div className="text">扫码前往微沙盘</div>
@@ -163,14 +223,15 @@ const BackendHomePage = () => {
                 </div>
 
                 {/* 網址及標題 */}
-                <div className="linkContainer" onClick={() => this.handleQRCodeLinkOnClick()}>
-                    <div className="text">微沙盘链接</div>
+                <div className="linkContainer" onClick={() => handleQRCodeLinkOnClick()}>
+                    <div className="text">点网址复制分享連結</div>
                     <div className="link">{CustomerWebSiteUrl}</div>
+                    {/* <div className="link">http://hvr.isunupcg.com/</div> */}
                 </div>
 
                 {/* 返回鈕 */}
                 <div className="backButtonContainer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width={145} height={145} viewBox="-5 -5 155 155" onClick={() => this.handleQRCodeBackButtonOnClick()}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width={145} height={145} viewBox="-5 -5 155 155" onClick={() => handleQRCodeBackButtonOnClick()}>
                         <title>資產 2</title>
                         <g id="67fd8c09-ee4a-4c7e-9976-197022cc7aa3" data-name="圖層 2">
                             <g id="0d2fd54e-aa31-4b91-ae34-45dcdaf2a0f5" data-name="圖層 1">

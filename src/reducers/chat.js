@@ -1,12 +1,13 @@
 var chatState = {
     messagelist: [],        // 聊天頁面的聊天文字
-    clientInfo: {},         // 顾问信息
+    clientInfo: {},         // 顧客訪問時是銷售、銷售訪問時是銷售
     socket: null,           // socket
+    realUserInfo: {},       // 當前操作的使用者
 
     // Backend
     reciverList: [],        // 跟所有人的對話紀錄總清單
     userInfo: [],
-    c_info: []              // 顧客資訊
+    c_info: {}              // 顧客在錢台看是空(未完成:顧客在前台看是顧客), 銷售在後台看是顧客
 }
 
 export default function chat(state = chatState, action) {
@@ -25,6 +26,17 @@ export default function chat(state = chatState, action) {
             return {
                 ...state,
                 messagelist: tempMsglist
+            }
+        // 清除MessageList，以便下次進入聊天頁面重新push數據進來
+        case 'CLEARMESSAGELIST':
+            return {
+                ...state,
+                messagelist: []
+            }
+        case 'SETREALUSERINFO':
+            return {
+                ...state,
+                realUserInfo: action.value
             }
 
         // Frontend

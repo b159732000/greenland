@@ -69,7 +69,7 @@ $YourSentenceBdColor: rgba(0, 0, 0, 0.1); //對方說的話的邊框顏色
     height: $ContactBarHeight;
     display: flex;
     align-items: center;
-    padding: 0.8rem 3%;
+    padding: 0.3rem 3%;
     // 第一層子div通用屬性
     & > div {
       display: inline-block;
@@ -93,7 +93,6 @@ $YourSentenceBdColor: rgba(0, 0, 0, 0.1); //對方說的話的邊框顏色
       align-items: center;
       width: 75%;
       padding-left: 3%;
-      border: 1px solid #000;
       // 大頭貼
       .portraitContainer {
         display: inline-block;

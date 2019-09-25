@@ -35,6 +35,7 @@ class ChatPage extends React.Component {
             debugConsole: 'debugDefault'
         }
     }
+
     componentDidMount() {
         if (window.enableWeXinLogIn) {
             let _this = this
@@ -57,18 +58,19 @@ class ChatPage extends React.Component {
                 })
             }, 400);
         }
-
-
     }
+
     componentDidUpdate(prevProps) {
         if (prevProps.messagelist.length != this.props.messagelist.length) {
             this.dialogContainer.scrollTop = this.dialogContainer.scrollHeight;
         }
     }
+
     // 返回上頁鈕點擊觸發
     handleBackButtonClick() {
         this.props.history.goBack();
     }
+
     getHistory() {
         let _this = this
         getHistory({
@@ -81,6 +83,7 @@ class ChatPage extends React.Component {
             }
         })
     }
+
     structureMessage(t, m) {
         // 构建 message 对象
         var that = this
@@ -112,8 +115,8 @@ class ChatPage extends React.Component {
         var that = this
         Csend(message).then(res => {
         })
-
     }
+
     input_change(e) {
         this.setState({ message: e.target.value })
     }
@@ -192,10 +195,10 @@ class ChatPage extends React.Component {
                     <div className="centerContainer">
                         {/* 大頭貼 */}
                         <div className="portraitContainer">
-                            <img src={clientInfo.logo} alt="" />
+                            <img src={this.props.clientInfo.logo} alt="" />
                         </div>
                         {/* 姓名 */}
-                        <div className="name">{clientInfo.real_name}</div>
+                        <div className="name">{this.props.clientInfo.real_name}</div>
                     </div>
                     {/* info按鈕 */}
                     {/* <a href={clientInfo.phone} className="infoContainer" onClick={() => this.handlePhoneIconClick()}> */}
@@ -285,4 +288,5 @@ const mapDispatchToProps = {
     pushMessage,
     setSocket
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(ChatPage);

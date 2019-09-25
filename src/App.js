@@ -32,35 +32,76 @@ import axios from 'axios'
 import wx from 'weixin-js-sdk'
 import { setClientInfoAction } from './actions/chatPage.js'
 import { changeSceneID, set_usertype } from './actions/actions.js';
+import { setRealUserInfo } from './actions/chatPage.js';
 
 // App.js主要內容
 const App = (props) => {
-  const dispatch = useDispatch();
 
-  // 销售人员资讯
-  // 設定store中的clientInfo
+  // store
   const setClientInfo = (value) => dispatch(setClientInfoAction(value));  // setClientInfo = dispatch({type: 'SETCLIENTINFO', value: value})
   const set_userType = (value) => dispatch(set_userType(value));
+  const storeCInfo = useSelector(state => state.chat.c_info);             // 顧客在前台看是顧客, 銷售在後台看是顧客
+  const storeClientInfo = useSelector(state => state.chat.clientInfo);    // 顧客訪問時是銷售、銷售訪問時是銷售
+  const storeRealUserInfo = useSelector(state => state.chat.realUserInfo);
+  // dispatch
+  const dispatch = useDispatch();
+  const setStoreRealUserInfo = (value) => dispatch(setRealUserInfo(value));   // 設定store.realUserInfo
 
   const [clientInfo, setStateClientInfo] = useState();
   useEffect(() => {
-    console.log('本頁state Client更改成功，新值為↓↓↓' + clientInfo);
-    console.log(clientInfo);
-    console.log('本頁state Client更改成功，新值為↑↑↑' + clientInfo);
+    // console.log('本頁state Client更改成功，新值為↓↓↓' + clientInfo);
+    // console.log(clientInfo);
+    // console.log('本頁state Client更改成功，新值為↑↑↑' + clientInfo);
   }, [clientInfo])
+
+  useEffect(() => {
+    // console.log('store.realUserInfo↓↓↓↓↓↓↓↓');
+    // console.log(storeRealUserInfo);
+    // console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑')
+
+  }, [storeRealUserInfo])
+
+  useEffect(() => {
+    // console.log('store.chat.clientInfo (顧客訪問時是銷售、銷售訪問時是銷售)↓↓↓')
+    // console.log(storeClientInfo);
+    // console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑')
+
+    // console.log('store.chat.c_info (銷售在後台看是顧客)↓↓↓')
+    // console.log(storeCInfo);
+    // console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑')
+  }, [storeCInfo, storeClientInfo])
 
   useEffect(() => {
     if (window.enableWeiXinLogIn) {
       getWeiXinData();    //使用的是上面const的getWeixinData()
     }
+    
+    if(Cookies.get('p2_user_type')) {
+      console.log('cookie有userType，將值放入store.realUserInfo');
+      setStoreRealUserInfo({
+        ...storeRealUserInfo,
+        user_type: Number(Cookies.get('p2_user_type'))
+      })
+    } else {
+      console.log('cookie沒有userType，將cookie.userType & store.realUserInfo設為1');
+      Cookies.set('p2_user_type', 1)
+      setStoreRealUserInfo({
+        ...storeRealUserInfo,
+        user_type: 1
+      })
+    }
+
   }, [])
 
   // 接入微信數據 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // ?b=5036&s=1
   const [visitData, setVisitData] = useState();
   const getWeiXinData = () => {
-    console.log('開始接入微信數據 (程式在App.js中執行)')
-    var infolist = GetRequest()
-    var infolist1 = GetRequest()
+    console.log('開始接入微信數據 (程式在App.js中執行)');
+
+    // 取得網址夾帶的參數
+    var infolist = GetRequest();
+    var infolist1 = GetRequest();
 
     console.log('從網址取得夾帶的數據如下↓↓↓');
     console.log(infolist1);
@@ -69,21 +110,24 @@ const App = (props) => {
     // 1. 如果是銷售分享的話，保存銷售ID到local storage B中
     if (infolist.b) {
       stroage.set('B', infolist.b)
-      console.log('是銷售分享的，儲存銷售ID到local storage的B中，值如下↓↓↓');
-      console.log(stroage.get('B'));
-      console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑');
+      // console.log('是銷售分享的，儲存銷售ID到local storage的B中，值如下↓↓↓');
+      // console.log(stroage.get('B'));
+      // console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑');
     }
-    // 2. 判斷是否有公眾號授權，若有才執行用微信登入後專屬的功能(即從if 3.開始執行)，若無則跳轉到取得授權頁
+
+    // 2. 判斷是否有公眾號授權(網址有參數)，若有才執行用微信登入後專屬的功能(即從if 3.開始執行)，若無則跳轉到取得授權頁
     var _this = this
+    // 如果網址參數openid為空，
     if (!infolist.openid) {
       infolist = stroage.get('userInfo')
       if (!infolist) {
         window.location.href = 'http://statistics.isunupcg.com/other/GetUserInfo2?redirect_url=' + encodeURIComponent(window.location.href)
       }
     }
+
     // 3. 判斷是否有登入，若有就進行相關操作
     if (!Cookies.get('p2_token')) {
-      // 利用網址含的資訊，取得存在伺服器的銷售數據
+      // 利用第一次轉址的訊息，向伺服器傳token，讓伺服器向微信以取得微信授權資訊(姓名、地區...)
       mlogin(infolist)
     } else {
       // if (this.props.sceneId) {
@@ -92,7 +136,8 @@ const App = (props) => {
       getClentInfo();
       getGetSignP1()
     }
-    // 4. 判斷是不是要設置成為銷售(B端)
+
+    // 4. 判斷是不是要設置成為銷售(B端) (從url的參數operd.setAdviser)
     if (infolist1.operd === 'setAdviser') {
       setB(infolist.openid).then(res => {
         if (!res.res) _this.mlogin(infolist)
@@ -112,14 +157,15 @@ const App = (props) => {
       }
     }
     if (theRequest.openid) { }
-    console.log("從網址取得的訊息↓↓↓");
-    console.log(theRequest);
-    console.log("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑");
+    // console.log("從網址取得的訊息↓↓↓");
+    // console.log(theRequest);
+    // console.log("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑");
     return theRequest;
   }
 
-  // 取得存在伺服器的銷售數據
+  // 取得存在伺服器的銷售數據 (放到 local storage userInfo 內)
   const mlogin = (item) => {
+    console.log('開始執行mlogin');
     let _this = this
     let _data = {
       user_name: item.openid || item.user_name,
@@ -145,7 +191,7 @@ const App = (props) => {
     _data.openid = _data.user_name
     let _datas = qs.stringify({
       'share_id': _data.c_share_id,
-      'ptype': 2
+      'ptype': window.pid
     })
     axios.post('http://statistics.isunupcg.com/other/getShareUserid', _datas).then(res => {
       let $data1 = res.data.data
@@ -155,7 +201,7 @@ const App = (props) => {
       }
       let _data1 = qs.stringify({
         'share_id': _data.b_share_id,
-        'ptype': 2
+        'ptype': window.pid
       })
       axios.post('http://statistics.isunupcg.com/other/getShareUserid', _data1).then(res => {
         let $data = res.data.data
@@ -177,18 +223,49 @@ const App = (props) => {
           })
           let in30Minutes = 1 / 12;
           console.log('login success');
-          Cookies.set('p2_user_type', user_type)
+
+          // 將當前使用者的user_type放到cookies內
+          Cookies.set('p2_user_type', user_type);
+          setStoreRealUserInfo({
+            ...storeRealUserInfo,
+            user_type: user_type
+          })
+
           // visitIn(_this.props.pageIDlist[_this.state.currentPage])
-          Cookies.set('p2_token', res.data.access_token, { expires: in30Minutes })
-          if (!stroage.get('userInfo')) stroage.set('userInfo', _data)
-          getClentInfo()
-          getGetSignP1()
+          Cookies.set('p2_token', res.data.access_token, { expires: in30Minutes });
+
+          // 放使用者數據進 LocalStorage.userInfo
+          console.log('放使用者數據進LocalStorage.userInfo (在mlogin中)');
+          if (!stroage.get('userInfo')) stroage.set('userInfo', _data);
+
+          getClentInfo();
+          getGetSignP1();
           stroage.set('user_id', res.data._id)
           // stroage.set('visitData', _this.state.visitData)
         })
       })
     })
     // })
+  }
+
+  // 取得顧問資訊(姓名、大頭貼網址...)，並放在Store, State, cookies, local storage clientInfo中。
+  const getClentInfo = () => {
+    let _this = this
+    var infolist = GetRequest()
+    // console.log(infolist);
+
+    // 從storage中取得分享出來的銷售的ID
+    let b_id = infolist.b ? (infolist.b) : (stroage.get('B') ? stroage.get('B') : 0);
+
+    // 取得顧問資訊，並放到Store, State, cookies, local storage中。
+    GetHomeBInfo({ ptype: window.pid, b_shareid: b_id }).then(res => {
+      console.log('取得使用者資訊(姓名、大頭貼網址...)，並放在Store, State, Cookies, LocalStorage 的 ClientInfo中。');
+      setClientInfo(res.data.b_user_info);    //設定Store中的clientInfo
+      Cookies.set('clientInfo', res.data.b_user_info, { expires: 360 })
+      stroage.set('clientInfo', res.data.b_user_info)
+      set_usertype(Cookies.get('p2_user_type'))
+      setStateClientInfo(res.data.b_user_info);   //設定本頁state中的clientInfo
+    })
   }
 
   // 告訴伺服器我當前訪問哪一頁
@@ -204,36 +281,17 @@ const App = (props) => {
     })
   }
 
-  // 取得銷售資訊(姓名、大頭貼網址...)，並放在Store, State, cookies, local storage中。
-  const getClentInfo = () => {
-    let _this = this
-    var infolist = GetRequest()
-    console.log(infolist);
-
-    // 從storage中取得分享出來的銷售的ID
-    let b_id = infolist.b ? (infolist.b) : (stroage.get('B') ? stroage.get('B') : 0);
-
-    // 取得銷售資訊，並放到Store, State, cookies, local storage中。
-    GetHomeBInfo({ ptype: 2, b_shareid: b_id }).then(res => {
-      setClientInfo(res.data.b_user_info);    //設定Store中的clientInfo
-      Cookies.set('clientInfo', res.data.b_user_info, { expires: 360 })
-      stroage.set('clientInfo', res.data.b_user_info)
-      set_usertype(Cookies.set('p2_user_type'))
-      setStateClientInfo(res.data.b_user_info);   //設定本頁state中的clientInfo
-    })
-  }
-
   // 分享的资讯
   const getGetSignP1 = () => {
     let _this = this
     let user_type = (Cookies.get('p2_user_type') > 2)
     var infolist = GetRequest()
-    share({ pid: 2, transfer: (!user_type && window.location.href.indexOf('b') > -1) ? 1 : 0 }).then(res => {
+    share({ pid: window.pid, transfer: (!user_type && window.location.href.indexOf('b') > -1) ? 1 : 0 }).then(res => {
       var _shareid = res.data.share_id
       var short_key = res.data.short_key
-      var _href = 'http://hvr.isunupcg.com/RunXiShan?b=' + (user_type ? _shareid : (stroage.get('B') || 0)) + '&c=' + (!user_type ? _shareid : 0)
+      var _href = 'http://hvr.isunupcg.com/GreenLand?b=' + (user_type ? _shareid : (stroage.get('B') || 0)) + '&c=' + (!user_type ? _shareid : 0)
       console.log('share success');
-      console.log(_href);
+      console.log('分享連結 = ' + _href);
       GetSignP2({ url: window.location.href }).then(res => {
         wx.config({
           debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。

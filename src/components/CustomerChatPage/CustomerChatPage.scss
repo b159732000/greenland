@@ -114,6 +114,8 @@ $YourSentenceBdColor: rgba(0, 0, 0, 0.1); //對方說的話的邊框顏色
     }
     // 電話按鈕
     .infoContainer {
+      opacity: 0;
+      pointer-events: none;
       width: 15%;
       height: 100%;
       // border: 1px solid #000;

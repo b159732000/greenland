@@ -17,3 +17,11 @@ export function setClientInfoAction(info) {
 export function setSocket(socket) {
     return { type: 'SETSOCKET', value: socket }
 }
+
+export function clearMessageList() {
+    return { type: 'CLEARMESSAGELIST'}
+}
+
+export function setRealUserInfo(info) {
+    return { type: 'SETREALUSERINFO', value: info}
+}
