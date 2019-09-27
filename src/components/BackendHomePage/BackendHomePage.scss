@@ -786,10 +786,12 @@ $QRCodeShowTransition: all 0.3s ease-out;
             align-items: center;
             justify-content: center;
             height: 100%;
+             -webkit-user-select:text;
             input {
               width: 100%;
               background-color: #F4F8F7;
               border: none;
+               -webkit-user-select:text;
             }
           }
         }
@@ -812,6 +814,7 @@ $QRCodeShowTransition: all 0.3s ease-out;
           }
           .input {
             padding-left: 0.3rem;
+            -webkit-user-select:text;
           }
         }
         // 職稱
@@ -833,6 +836,7 @@ $QRCodeShowTransition: all 0.3s ease-out;
           }
           .input {
             padding-left: 0.3rem;
+            -webkit-user-select:text;
           }
         }
         // 手機號碼
@@ -854,6 +858,7 @@ $QRCodeShowTransition: all 0.3s ease-out;
           }
           .input {
             padding-left: 0.3rem;
+            -webkit-user-select:text;
           }
         }
       }

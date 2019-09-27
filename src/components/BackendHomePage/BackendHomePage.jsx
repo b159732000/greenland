@@ -155,6 +155,19 @@ const BackendHomePage = () => {
         setQRCodeIsOpen(false);
     }
 
+    // 從輸入框移開時觸發
+    const handleInputFocusOut = () => {
+        let userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            // window.addEventListener('focusout', function () {
+            //软键盘收起的事件处理
+            setTimeout(() => {
+                window.scrollTo(0, document.documentElement.scrollTop || document.body.scrollTop);
+            })
+            // });
+        }
+    }
+
     return (
         <div className={(QRCodeIsOpen) ? ("BackendHomePage qrCodeIsOpen") : ("BackendHomePage")}>
             {/* 名片 */}
@@ -266,7 +279,7 @@ const BackendHomePage = () => {
                                 </div>
                             </div>
                             <div className="input">
-                                <input type="text" placeholder="姓名" ref={clientUserNameDOM} />
+                                <input type="text" placeholder="姓名" ref={clientUserNameDOM} onBlur={() => handleInputFocusOut()} />
                             </div>
                         </div>
 
@@ -278,7 +291,7 @@ const BackendHomePage = () => {
                                 </div>
                             </div>
                             <div className="input">
-                                <input type="text" placeholder="职称" ref={clientUserPositionDOM} />
+                                <input type="text" placeholder="职称" ref={clientUserPositionDOM} onBlur={() => handleInputFocusOut()} />
                             </div>
                         </div>
 
@@ -290,7 +303,7 @@ const BackendHomePage = () => {
                                 </div>
                             </div>
                             <div className="input">
-                                <input type="text" placeholder="电话号码" ref={clientUserPhoneDOM} />
+                                <input type="text" placeholder="电话号码" ref={clientUserPhoneDOM} onBlur={() => handleInputFocusOut()} />
                             </div>
                         </div>
 

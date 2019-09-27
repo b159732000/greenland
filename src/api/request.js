@@ -63,7 +63,7 @@ service.interceptors.response.use(
         Cookie.remove('p2_clientInfo')
         Cookie.remove('p2_user_type')
         if (window.enableWeXinLogIn) {
-          window.location.href = 'http://hvr.isunupcg.com/RunXiShan'
+          window.location.href = 'http://hvr.isunupcg.com/GreenLand'
         }
         return Promise.reject(res)
       }

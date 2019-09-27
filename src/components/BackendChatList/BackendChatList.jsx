@@ -134,7 +134,7 @@ const BakcendMessageList = (props) => {
             {/* 標題 */}
             <div className="logoContainer">
                 <div className="logo">
-                    华润 | 聊天记录
+                    绿地 | 聊天记录
                     </div>
             </div>
 

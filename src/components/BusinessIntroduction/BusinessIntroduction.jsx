@@ -1,10 +1,84 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './BusinessIntroduction.scss'
+import Swiper from 'react-id-swiper'
 
 const BusinessIntroduction = () => {
+    useEffect(()=>{
+        var handler = function(e){
+            e.preventDefault();
+            }
+            document.addEventListener('touchmove', handler, false);//阻止默认事件
+            return()=>{
+                document.removeEventListener('touchmove', handler, false);//打开默认事件
+            }
+    }, [])
+
+    // Swiper區域
+    const [swiper, updateSwiper] = useState();
+    const goNext = () => {
+        if (swiper !== null) {
+            swiper.slideNext();
+        }
+    }
+    const goPrev = () => {
+        if (swiper !== null) {
+            swiper.slidePrev();
+        }
+    }
+    const goToSlideNumber = (selectedNumber) => {
+        if (swiper !== null) {
+            swiper.slideTo(selectedNumber - 1);
+        }
+    }
+    // 定義swiperRef為一個容器，可裝載任何東西
+    const swiperRef = useRef();
+    // 每次畫面有東西更新時，都會將最新的swiper放進這個容器中
+    swiperRef.current = swiper;
+    // 當slide更換時觸發
+    const handleSlideChange = () => {
+        let activeSlideNumber = swiperRef.current.activeIndex + 1;
+        console.log(activeSlideNumber);
+        if (activeSlideNumber <= 3) {
+            // setCurrentActivationMenu('City');
+        } else if (activeSlideNumber > 3) {
+            // setCurrentActivationMenu('Project');
+        }
+    }
+    // swiper設定
+    const swiperParams = {
+        direction: 'vertical',
+        wrapperClass: 'swiperWrapper',
+        on: {
+            // 'slideChange': () => { handleSlideChange() }
+        }
+    }
+    // 在DOM中添加好幾頁swiper(透過for迴圈)
+    let renderImages = () => {
+        // 最終要渲染到dom中的item數列
+        let items = [];
+        // 重複push到items中
+        for (let i = 1; i <= 8; i++) {
+            items.push(
+                <div key={i}>
+                    <img src={require('../../images/BusinessIntroduction/Book/' + i + '.jpg')} alt="" />
+                </div>
+            )
+        }
+        // 將結果返回
+        return (items);
+    }
+
     return (
         <div className="BusinessIntroduction">
-            <div className="text">此页内容更新中，敬请期待。</div>
+
+            {/* swiper */}
+            <div className="BuildingBook">
+                {/* 在css中叫做swiper-container */}
+                <Swiper {...swiperParams} getSwiper={updateSwiper}>
+                    {renderImages()}
+                </Swiper>
+            </div>
+
         </div>
     )
 }

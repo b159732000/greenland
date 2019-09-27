@@ -104,6 +104,7 @@ const App = (props) => {
     var infolist1 = GetRequest();
 
     console.log('從網址取得夾帶的數據如下↓↓↓');
+    console.log(infolist);
     console.log(infolist1);
     console.log('從網址取得夾帶的數據如上↑↑↑');
 
@@ -140,7 +141,7 @@ const App = (props) => {
     // 4. 判斷是不是要設置成為銷售(B端) (從url的參數operd.setAdviser)
     if (infolist1.operd === 'setAdviser') {
       setB(infolist.openid).then(res => {
-        if (!res.res) _this.mlogin(infolist)
+        if (!res.res) mlogin(infolist)
       })
     }
   }
@@ -250,7 +251,6 @@ const App = (props) => {
 
   // 取得顧問資訊(姓名、大頭貼網址...)，並放在Store, State, cookies, local storage clientInfo中。
   const getClentInfo = () => {
-    let _this = this
     var infolist = GetRequest()
     // console.log(infolist);
 
